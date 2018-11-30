@@ -1,11 +1,11 @@
 #!/bin/bash
 
 echo "WRITE COMMENT"
-var = "$(echo)"
+var = "$(cat)"
 git add .
 
 git status
 
-git commit -m "$(date)"
+git commit -m "var"
 
 git push
