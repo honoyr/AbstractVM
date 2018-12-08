@@ -22,12 +22,25 @@
 #include <vector>
 #include <stack>
 #include <list>
+#include "ClassIOperand.hpp"
+#include "ClassFactory.hpp"
 
-class AbstractVM : public vector {
+class AbstractVM {
 	AbstractVM ();
 	~AbstractVM();
 
 public:
+	IOperand	push(eOperandType type, std::string const & str);
+
+	void 		valid_data(std::string const &str);
+
+private:
+	Factory							factory;
+	std::vector<const IOperand *>	v;
+	int 							i;
+	bool 							exist_error;
+	bool 							exist_exit;
+	bool							esc;
 
 };
 

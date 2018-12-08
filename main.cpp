@@ -50,32 +50,57 @@ void    pars_command(std::string str)
         error(str);
 }
 
-int     main(int ac, char** av)
+void	valid_if_exeption(AbstractVM &vm, std::string str)
 {
-    int 		i;
-	std::string str;
+	try {
+		vm.valid_data(str);
+	}
+	catch (std::exception &e)
+			std::cout << e.what() << std::endl;
+}
+
+void	pars_stdin(std::string str, AbstractVM vm)
+{
 	std::vector <std::string> v_str;
-	AbstractVM	vm;
+	int 		i;
 
 	i = 0;
+	while(1)
+	{
+		std::cout << i++ << ". ";
+		std::cin >> str;
+		if (str == ";;")
+			break;
+		if ((!std::cin))
+			break;
+		v_str.push_back(str);
+	}
+}
+
+void	pars_stream(std::string str, AbstractVM vm)
+{
+	while(std::getline(std::cin, str))
+	{
+		pars_command(str);
+	}
+}
+
+int     main(int ac, char** av)
+{
+
+	std::string str;
+
+	AbstractVM	vm;
+
+
 	std::ifstream	ifstr(av[1]);
 
 	if (ac == 2){
-		while(std::getline(std::cin, str))
-		{
-			pars_command(str);
-		}
+		pars_stream(str, vm);
 	}
 	else if (ac == 1){
+		pars_stdin(str, vm);
 
-		while(1)
-		{
-			std::cout << i++ << ". ";
-			std::cin >> str;
-			if (str == ";;")
-				break;
-			v_str.push_back(str);
-		}
 	}
 	else
 	{
