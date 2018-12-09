@@ -20,6 +20,7 @@
 #include <string>
 #include <time.h>
 #include <vector>
+#include <regex>
 #include <stack>
 #include <list>
 #include "ClassIOperand.hpp"

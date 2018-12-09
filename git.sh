@@ -3,7 +3,7 @@
 git add .
 
 git status
-echo "WRITE COMMENT"
-git commit -m "$(cat)"
+
+git commit -m "$(date)"
 
 git push
