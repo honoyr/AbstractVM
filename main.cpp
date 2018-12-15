@@ -81,7 +81,7 @@ void	pars_stream(std::string str, AbstractVM vm)
 {
 	while(std::getline(std::cin, str))
 	{
-		pars_command(str);
+		valid_if_exeption(vm, str);
 	}
 }
 

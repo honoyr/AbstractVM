@@ -28,8 +28,11 @@
 
 class AbstractVM {
     public:
-        AbstractVM ();
-        ~AbstractVM();
+        AbstractVM(void);
+        AbstractVM(AbstractVM const &vm);
+        AbstractVM &operator=(AbstractVM const &vm);
+        ~AbstractVM(void);
+
         IOperand	push(eOperandType type, std::string const & str);
 
         void 		valid_data(std::string const &str);
