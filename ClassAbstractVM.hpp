@@ -27,21 +27,36 @@
 #include "ClassFactory.hpp"
 
 class AbstractVM {
-	AbstractVM ();
-	~AbstractVM();
+    public:
+        AbstractVM ();
+        ~AbstractVM();
+        IOperand	push(eOperandType type, std::string const & str);
 
-public:
-	IOperand	push(eOperandType type, std::string const & str);
+        void 		valid_data(std::string const &str);
 
-	void 		valid_data(std::string const &str);
+	class LexicalErrorExcept : public std::exception{
+		public:
+            LexicalErrorExcept();
+            LexicalErrorExcept(std::string nline, std::string str)
+                    : _nline(nline), _str(str) {}
+            const char *what() const throw()
+            {
+                std::string error_exept("Error: Lexical - line ");
+                error_exept = (error_exept + _nline + " --> " + _str);
+                return (error_exept.c_str());
+            }
+		private:
+			std::string                 _nline;
+			std::string	                _str;
+	};
 
-private:
-	Factory							factory;
-	std::vector<const IOperand *>	v;
-	int 							i;
-	bool 							exist_error;
-	bool 							exist_exit;
-	bool							esc;
+    private:
+        Factory							factory;
+        std::vector<const IOperand *>	v;
+        int 							i;
+        bool 							exist_error;
+        bool 							exist_exit;
+        bool							esc;
 
 };
 
