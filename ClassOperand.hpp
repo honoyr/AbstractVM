@@ -55,9 +55,9 @@ public:
 			else if (type == Int16)
 				return ((static_cast<short int>(atoi(str.c_str()))));
 			else if (type == Int32)
-				return ((static_cast<int>(atof(str))));
+				return ((static_cast<int>(atof(str.c_str()))));
 			else if (type == Float)
-				return ((atof(str)));
+				return ((atof(str.c_str())));
 			else
 				return (std::stod(str));
 		}

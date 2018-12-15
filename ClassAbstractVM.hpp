@@ -25,6 +25,7 @@
 #include <list>
 #include "ClassIOperand.hpp"
 #include "ClassFactory.hpp"
+#include "ClassOperand.hpp"
 
 class AbstractVM {
     public:
@@ -56,17 +57,16 @@ class AbstractVM {
 	class DoubExitExcept : public std::exception{
 		public:
 			DoubExitExcept();
-			DoubExitExcept(std::string nline, std::string str)
-				: _nline(nline), _str(str) {}
+			DoubExitExcept(std::string nline)
+				: _nline(nline) {}
 			const char *what() const throw()
 			{
 				std::string error_exept("Error: Double exit - line ");
-				error_exept = (error_exept + _nline + " --> " + _str);
+				error_exept = (error_exept + _nline);
 				return (error_exept.c_str());
 			}
 		private:
 			std::string                 _nline;
-			std::string	                _str;
 	};
     private:
         Factory							factory;

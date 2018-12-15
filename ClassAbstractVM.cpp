@@ -12,7 +12,18 @@
 
 #include "ClassAbstractVM.hpp"
 
-
+AbstractVM::AbstractVM(void): {}
+AbstractVM::AbstractVM(AbstractVM const &copy){
+	factory = copy.factory;
+	v = copy.v;
+	i = copy.i;
+	exist_error = copy.exist_error;
+	exist_exit = copy.exist_exit;
+	esc = copy.esc;
+	return *this;
+}
+AbstractVM&		AbstractVM &operator=(AbstractVM const &vm){return *this;}
+AbstractVM::~AbstractVM(void){}
 
 void 		AbstractVM::valid_data(std::string const &str){
 

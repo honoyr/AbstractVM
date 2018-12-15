@@ -11,10 +11,10 @@
 /* ************************************************************************** */
 
 #include "ClassAbstractVM.hpp"
-#include "ClassFactory.hpp"
-#include "ClassIOperand.hpp"
+//#include "ClassFactory.hpp"
+//#include "ClassIOperand.hpp"
 #include "ClassOperand.hpp"
-
+#include <fstream>
 
 //
 //void    push_comm(std::string str)
@@ -55,8 +55,9 @@ void	valid_if_exeption(AbstractVM &vm, std::string str)
 	try {
 		vm.valid_data(str);
 	}
-	catch (std::exception &e) 
-			std::cout << e.what() << std::endl;
+	catch (std::exception &e){
+		std::cout << e.what() << std::endl;
+	}
 }
 
 void	pars_stdin(std::string str, AbstractVM vm)
