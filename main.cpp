@@ -73,6 +73,7 @@ void	pars_stdin(std::string str, AbstractVM vm)
 			break;
 		if ((!std::cin))
 			break;
+		valid_if_exeption(vm, str);
 		v_str.push_back(str);
 	}
 }
@@ -87,13 +88,11 @@ void	pars_stream(std::string str, AbstractVM vm)
 
 int     main(int ac, char** av)
 {
-
 	std::string str;
-
 	AbstractVM	vm;
 
 
-	std::ifstream	ifstr(av[1]);
+	std::ifstream	ifs(av[1]);
 
 	if (ac == 2){
 		pars_stream(str, vm);

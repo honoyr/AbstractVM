@@ -53,6 +53,21 @@ class AbstractVM {
 			std::string	                _str;
 	};
 
+	class DoubExitExcept : public std::exception{
+		public:
+			DoubExitExcept();
+			DoubExitExcept(std::string nline, std::string str)
+				: _nline(nline), _str(str) {}
+			const char *what() const throw()
+			{
+				std::string error_exept("Error: Double exit - line ");
+				error_exept = (error_exept + _nline + " --> " + _str);
+				return (error_exept.c_str());
+			}
+		private:
+			std::string                 _nline;
+			std::string	                _str;
+	};
     private:
         Factory							factory;
         std::vector<const IOperand *>	v;

@@ -14,7 +14,7 @@
 
 
 
-void 		valid_data(std::string const &str){
+void 		AbstractVM::valid_data(std::string const &str){
 
 	std::cmatch		result;
 
@@ -26,9 +26,9 @@ void 		valid_data(std::string const &str){
 
     if (!regex_match(str, arg) && !regex_match(str, fun) && !regex_match(str, comm)){
         exist_error = true;
-        throw LexicalErrorExept(std::to_string(this->i), str);
+        throw LexicalErrorExcept(std::to_string(this->i), str);
     }
-    else if (regex_match(str, fun) && line.find("exit") != std::string::npos){
+    else if (regex_match(str, fun) && str.find("exit") != std::string::npos){
         if (exist_exit)
         {
             exist_error = true;

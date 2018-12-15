@@ -18,6 +18,7 @@
 #include "ClassFactory.hpp"
 #include <typeinfo>
 #include <stdlib.h>
+#include <cstdlib>
 
 template <typename T>
 class Operand : public IOperand{
@@ -44,21 +45,21 @@ public:
 			else if (typeid(double) == typeid(T))
 				return (Double);
 			else
-				return (NULL);
+				return (Double);
 		}
 
 		T					convert_type(std::string str) const
 		{
 			if (type == Int8)
-				return ((static_cast<char>(atoi(str))));
+				return ((static_cast<char>(atoi(str.c_str()))));
 			else if (type == Int16)
-				return ((static_cast<short int>(atoi(str))));
+				return ((static_cast<short int>(atoi(str.c_str()))));
 			else if (type == Int32)
 				return ((static_cast<int>(atof(str))));
 			else if (type == Float)
 				return ((atof(str)));
-			else if (type == Double)
-				return ((strtod(str, NULL)));
+			else
+				return (std::stod(str));
 		}
 };
 
