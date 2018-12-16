@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #include "ClassAbstractVM.hpp"
-//#include "ClassFactory.hpp"
-//#include "ClassIOperand.hpp"
+#include "ClassFactory.hpp"
+#include "ClassIOperand.hpp"
 #include "ClassOperand.hpp"
 #include <fstream>
 

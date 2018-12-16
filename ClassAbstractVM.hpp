@@ -34,6 +34,11 @@ class AbstractVM {
         AbstractVM &operator=(AbstractVM const &vm);
         ~AbstractVM(void);
 
+//		Factory		getFactory(void);
+		bool 		getExist_error(void);
+		bool 		getExist_exit(void);
+		bool 		getEsc(void);
+
         IOperand	push(eOperandType type, std::string const & str);
 
         void 		valid_data(std::string const &str);
