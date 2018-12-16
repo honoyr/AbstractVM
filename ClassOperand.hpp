@@ -24,13 +24,27 @@ template <typename T>
 class Operand : public IOperand{
 
 public:
-	Operand(){}
-	~Operand(){}
+    Operand(void) : str("0"), type(Int8){}
+    Operand(T value) : str(std::to_string(value)), type(identify_type()){}
+    Operand(Operand const &copy){
+        type = copy.getType();
+        str = copy.toString();
+    }
+	Operand(IOperand const *rhs){
+		this->str = (*rhs).toString();
+		this->type = (*rhs).getType();
+	}
+    ~Operand(){}
 
-	private:
+
+    eOperandType		getType(void) const { return (this->type); }
+    std::string         &toString(void) const { return str; }
+	int					getPrecision(void) const { return (static_cast<int>(type)); }
+
+private:
 		std::string     str;
 		eOperandType    type;
-		Factory			factory;
+        Factory			factory;
 
 		eOperandType		identify_type(void)
 		{

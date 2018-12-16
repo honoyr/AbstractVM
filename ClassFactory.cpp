@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ClassFactory.hpp                                   :+:      :+:    :+:   */
+/*   ClassFactory.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dgonor <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,29 +11,41 @@
 /* ************************************************************************** */
 
 
-#ifndef CLASSFACTORY_HPP
-#define CLASSFACTORY_HPP
+#include "ClassFactory.hpp"
+#include "ClassOperand.hpp"
+#include <climits>
 
-#include "ClassIOperand.hpp"
 
-class Factory{
+//Factory::Factory (){}
+//Factory::Factory(Factory const &rhs){ *this = rhs; }
+//Factory::~Factory(){}
+//
+//Factory::Factory &operator=(Factory const &rhs){ return *this; }
 
-public:
-	Factory ();
-	Factory(Factory const &rhs);
-	~Factory();
+IOperand const * Factory::createOperand( eOperandType type, std::string const & value ) const {
+	IOperand const *(Factory::*method[])(std::string const &value) const = {
+		&Factory::createInt8,
+		&Factory::createInt16,
+		&Factory::createInt32,
+		&Factory::createFloat,
+		&Factory::createDouble
+	};
+	return ((this->*method[type](value)));
+}
 
-	Factory &operator=(Factory const &rhs);
+IOperand const * Factory::createInt8( std::string const & value ) const {
+	return (new Operand<char>(static_cast<char>(std::stoi(value))));
+}
+IOperand const * Factory::createInt16( std::string const & value ) const {
+	return (new Operand<short>(static_cast<short>(std::stoi(value))));
+}
+IOperand const * Factory::createInt32( std::string const & value ) const {
+	return (new Operand<int>(static_cast<int>(std::stoi(value))));
+}
+IOperand const * Factory::createFloat( std::string const & value ) const {
+	return (new Operand<float>(static_cast<float>(std::stof(value))));
+}
+IOperand const * Factory::createDouble( std::string const & value ) const {
+	return (new Operand<double>(static_cast<double>(std::stod(value))));
+}
 
-    IOperand const * createOperand( eOperandType type, std::string const & value ) const;
-
-private:
-    IOperand const * createInt8( std::string const & value ) const;
-    IOperand const * createInt16( std::string const & value ) const;
-    IOperand const * createInt32( std::string const & value ) const;
-    IOperand const * createFloat( std::string const & value ) const;
-    IOperand const * createDouble( std::string const & value ) const;
-
-};
-
-#endif

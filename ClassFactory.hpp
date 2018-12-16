@@ -14,16 +14,16 @@
 #ifndef CLASSFACTORY_HPP
 #define CLASSFACTORY_HPP
 
-#include "ClassIOperand.hpp"
+#include "ClassOperand.hpp"
 
 class Factory{
 
 public:
-	Factory ();
-	Factory(Factory const &rhs);
-	~Factory();
-
-	Factory &operator=(Factory const &rhs);
+//	Factory (void);
+//	Factory(Factory const &rhs);
+//	~Factory(void);
+//
+//	Factory &operator=(Factory const &rhs);
 
     IOperand const * createOperand( eOperandType type, std::string const & value ) const;
 
