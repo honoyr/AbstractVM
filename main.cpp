@@ -79,11 +79,13 @@ void	pars_stdin(std::string str, AbstractVM vm)
 	}
 }
 
-void	pars_stream(std::string str, AbstractVM vm)
+void	pars_stream(std::string str, AbstractVM vm, std::ifstream &ifstrm)
 {
-	while(std::getline(std::cin, str))
+	while(std::getline(ifstrm, str))
 	{
 		valid_if_exeption(vm, str);
+        if (!vm.getExist_error() && !vm.getExist_exit())
+            vm.add_data(str);
 	}
 }
 
@@ -93,10 +95,15 @@ int     main(int ac, char** av)
 	AbstractVM	vm;
 
 
-	std::ifstream	ifs(av[1]);
+	std::ifstream	ifstrm(av[1]);
 
 	if (ac == 2){
-		pars_stream(str, vm);
+
+        if (!ifstrm)
+            std::cout << "Unreadable file"
+                      << std::endl;
+        else
+		    pars_stream(str, vm, ifstrm);
 	}
 	else if (ac == 1){
 		pars_stdin(str, vm);

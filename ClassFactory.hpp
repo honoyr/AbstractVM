@@ -14,13 +14,14 @@
 #ifndef CLASSFACTORY_HPP
 #define CLASSFACTORY_HPP
 
-#include "ClassOperand.hpp"
+//#include "ClassOperand.hpp"
+#include "ClassIOperand.hpp"
 
 class Factory{
 
 public:
 //	Factory (void);
-//	Factory(Factory const &rhs);
+//	Factory(Factory const &);
 //	~Factory(void);
 //
 //	Factory &operator=(Factory const &rhs);

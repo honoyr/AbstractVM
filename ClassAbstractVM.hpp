@@ -23,6 +23,7 @@
 #include <regex>
 #include <stack>
 #include <list>
+
 #include "ClassIOperand.hpp"
 #include "ClassFactory.hpp"
 #include "ClassOperand.hpp"
@@ -34,14 +35,21 @@ class AbstractVM {
         AbstractVM &operator=(AbstractVM const &vm);
         ~AbstractVM(void);
 
-//		Factory		getFactory(void);
-		bool 		getExist_error(void);
-		bool 		getExist_exit(void);
-		bool 		getEsc(void);
+//		Factory		    getFactory(void);
+        eOperandType    getType(std::string const &type);
+		bool 		    getExist_error(void);
+		bool 		    getExist_exit(void);
+		bool 		    getEsc(void);
 
-        IOperand	push(eOperandType type, std::string const & str);
+        void 		    valid_data(std::string const &str);
+        void            add_data(std::string const &str);
 
-        void 		valid_data(std::string const &str);
+        IOperand	    push(std::string const & str, eOperandType type);
+        IOperand	    assert(std::string const & str, eOperandType type);
+
+        void	    add(void);
+        void	    sub(void);
+
 
 	class LexicalErrorExcept : public std::exception{
 		public:

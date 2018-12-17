@@ -17,20 +17,20 @@
 
 
 //Factory::Factory (){}
-//Factory::Factory(Factory const &rhs){ *this = rhs; }
+//Factory::Factory(Factory const &rhs){ }
 //Factory::~Factory(){}
 //
 //Factory::Factory &operator=(Factory const &rhs){ return *this; }
 
 IOperand const * Factory::createOperand( eOperandType type, std::string const & value ) const {
-	IOperand const *(Factory::*method[])(std::string const &value) const = {
+    IOperand const	*(Factory::*method[])(std::string const &value) const = {
 		&Factory::createInt8,
 		&Factory::createInt16,
 		&Factory::createInt32,
 		&Factory::createFloat,
 		&Factory::createDouble
 	};
-	return ((this->*method[type](value)));
+    return ((this->*method[type])(value));
 }
 
 IOperand const * Factory::createInt8( std::string const & value ) const {

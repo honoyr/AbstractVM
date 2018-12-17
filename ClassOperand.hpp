@@ -37,44 +37,44 @@ public:
     ~Operand(){}
 
 
-    eOperandType		getType(void) const { return (this->type); }
-    std::string         &toString(void) const { return str; }
-	int					getPrecision(void) const { return (static_cast<int>(type)); }
+    eOperandType		getType(void)       const { return (this->type); }
+    std::string const & toString( void )    const { return str; }
+	int					getPrecision(void)  const { return (static_cast<int>(type)); }
 
 private:
-		std::string     str;
-		eOperandType    type;
-        Factory			factory;
+    std::string     str;
+    Factory			factory;
+    eOperandType    type;
 
-		eOperandType		identify_type(void)
-		{
-			if (typeid(char) == typeid(T))
-				return (Int8);
-			else if (typeid(short int) == typeid(T))
-				return (Int16);
-			else if (typeid(int) == typeid(T))
-				return (Int32);
-			else if (typeid(float) == typeid(T))
-				return (Float);
-			else if (typeid(double) == typeid(T))
-				return (Double);
-			else
-				return (Double);
-		}
+    eOperandType		identify_type(void)
+    {
+        if (typeid(char) == typeid(T))
+            return (Int8);
+        else if (typeid(short int) == typeid(T))
+            return (Int16);
+        else if (typeid(int) == typeid(T))
+            return (Int32);
+        else if (typeid(float) == typeid(T))
+            return (Float);
+        else if (typeid(double) == typeid(T))
+            return (Double);
+        else
+            return (Double);
+    }
 
-		T					convert_type(std::string str) const
-		{
-			if (type == Int8)
-				return ((static_cast<char>(atoi(str.c_str()))));
-			else if (type == Int16)
-				return ((static_cast<short int>(atoi(str.c_str()))));
-			else if (type == Int32)
-				return ((static_cast<int>(atof(str.c_str()))));
-			else if (type == Float)
-				return ((atof(str.c_str())));
-			else
-				return (std::stod(str));
-		}
+    T				    convert_type(std::string str) const
+    {
+        if (type == Int8)
+            return ((static_cast<char>(atoi(str.c_str()))));
+        else if (type == Int16)
+            return ((static_cast<short int>(atoi(str.c_str()))));
+        else if (type == Int32)
+            return ((static_cast<int>(atof(str.c_str()))));
+        else if (type == Float)
+            return ((atof(str.c_str())));
+        else
+            return (std::stod(str));
+    }
 };
 
 #endif
