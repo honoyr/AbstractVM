@@ -99,10 +99,18 @@ void 		AbstractVM::add_data(std::string const &str){
 
 }
 
-IOperand	    AbstractVM::push(std::string const & str, eOperandType type){
+void	    AbstractVM::push(std::string const & str, eOperandType type){
     v.push_back(factory.createOperand(type, str));
 }
-IOperand	    AbstractVM::assert(std::string const & str, eOperandType type){}
+void	    AbstractVM::assert(std::string const & str, eOperandType type){
+    const IOperand     *assert;
+
+    if (v.empty())
+        throw EmptyStackExcept(std::to_string(this->i));
+    if(!(assert == factory.createOperand(type, str)))
+        throw ErrorAssertExcept(std::to_string(this->i), v.back()->toString(), str);
+
+}
 
 void	    AbstractVM::add(void){}
 void	    AbstractVM::sub(void){}

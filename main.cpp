@@ -16,39 +16,7 @@
 #include "ClassOperand.hpp"
 #include <fstream>
 
-//
-//void    push_comm(std::string str)
-//{
-//
-//}
-//
-//void    pars_command(std::string str)
-//{
-//    if (str.find("push"))
-//        push_comm(str);
-//    else if (str.find("pop"))
-//        pop_comm(str);
-//    else if (str.find("dump"))
-//        dump_comm(str);
-//    else if (str.find("assert"))
-//        assert_comm(str);
-//    else if (str.find("add"))
-//        add_comm(str);
-//    else if (str.find("sub"))
-//        sub_comm(str);
-//    else if (str.find("mul"))
-//        mul_comm(str);
-//    else if (str.find("div"))
-//        div_comm(str);
-//    else if (str.find("mod"))
-//        mod_comm(str);
-//    else if (str.find("print"))
-//        print_comm(str);
-//    else if (str.find("exit"))
-//        exit_comm(str);
-//    else
-//        error(str);
-//}
+
 
 void	valid_if_exeption(AbstractVM &vm, std::string str)
 {
