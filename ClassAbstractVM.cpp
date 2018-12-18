@@ -71,7 +71,7 @@ void 		AbstractVM::add_data(std::string const &str){
             {"push", &AbstractVM::push}
     };
 
-    std::map<std::string, void (AbstractVM::*)(std::string const &str, eOperandType type)> fun_exe = {
+    std::map<std::string, void (AbstractVM::*)()> fun_exe = {
             {"add", &AbstractVM::add},
             {"sub", &AbstractVM::sub}
     };
@@ -87,8 +87,25 @@ void 		AbstractVM::add_data(std::string const &str){
         std::regex_search(str.begin(), str.end(), result, arg);
         (this->*arg_exe[result.str(1)])(getType(result.str(4)), result.str(10));
     }
+    else if (regex_match(str, fun))
+    {
+        std::regex_search(str.begin(), str.end(), result, fun);
+        (this->*fun_exe[result.str(1)])();
+    }
+    else if (regex_match(str, comm))
+        NULL;
+    else
+        throw LexicalErrorExcept(std::to_string(this->i), str);
 
 }
+
+IOperand	    AbstractVM::push(std::string const & str, eOperandType type){
+    v.push_back(factory.createOperand(type, str));
+}
+IOperand	    AbstractVM::assert(std::string const & str, eOperandType type){}
+
+void	    AbstractVM::add(void){}
+void	    AbstractVM::sub(void){}
 
 //EXEPTION______________________________________________________________________________
 //
