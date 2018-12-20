@@ -12,6 +12,7 @@
 
 #include "ClassAbstractVM.hpp"
 #include <map>
+#include <regex>
 
 AbstractVM::AbstractVM(void): i(0), exist_error(false), exist_exit(false), esc(false) {}
 AbstractVM::AbstractVM(AbstractVM const &copy){
@@ -67,15 +68,15 @@ void 		AbstractVM::valid_data(std::string const &str){
 void 		AbstractVM::add_data(std::string const &str){
 
     std::map<std::string, void (AbstractVM::*)(std::string const &str, eOperandType type)> arg_exe ={
-            {"assert", &AbstractVM::assert},
-            {"push", &AbstractVM::push}
+            {"assert", &AbstractVM::Assert},
+            {"push", &AbstractVM::Push}
     };
 
     std::map<std::string, void (AbstractVM::*)()> fun_exe = {
             {"add", &AbstractVM::add},
             {"sub", &AbstractVM::sub}
     };
-    std::cmatch		result;
+    std::smatch		result;
 
     std::regex 		arg("[ \t]*((push)|(assert))[ \t]+?((int8)|(int16)|(int32)|(float)|(double))[ \t]*?\\(([-]?[0-9]*.[0-9]*)\\)[ \t]*([;].*)?");
     std::regex 		fun("[\t ]*((exit)|(print)|(mod)|(div)|(mul)|(sub)|(add)|(dump)|(pop)|(sum)|(avr)|(sort)|(min)|(max))[\t ]*([;].*)?");
@@ -99,10 +100,11 @@ void 		AbstractVM::add_data(std::string const &str){
 
 }
 
-void	    AbstractVM::push(std::string const & str, eOperandType type){
+void	    AbstractVM::Push(std::string const & str, eOperandType type){
     v.push_back(factory.createOperand(type, str));
 }
-void	    AbstractVM::assert(std::string const & str, eOperandType type){
+
+void	    AbstractVM::Assert(std::string const & str, eOperandType type){
     const IOperand     *assert;
 
     if (v.empty())

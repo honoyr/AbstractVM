@@ -44,8 +44,8 @@ class AbstractVM {
         void 		    valid_data(std::string const &str);
         void            add_data(std::string const &str);
 
-        void            push(std::string const & str, eOperandType type);
-        void       	    assert(std::string const & str, eOperandType type);
+        void            Push(std::string const & str, eOperandType type);
+        void       	    Assert(std::string const & str, eOperandType type);
 
         void	        add(void);
         void	        sub(void);
