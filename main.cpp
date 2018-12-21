@@ -47,7 +47,7 @@ void	pars_stdin(std::string str, AbstractVM vm)
 	}
 }
 
-void	pars_stream(std::string str, AbstractVM vm, std::ifstream &ifstrm)
+void	pars_stream(std::string &str, AbstractVM &vm, std::ifstream &ifstrm)
 {
 	while(std::getline(ifstrm, str))
 	{

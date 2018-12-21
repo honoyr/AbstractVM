@@ -42,7 +42,7 @@ bool 		AbstractVM::getEsc(void){ return this->esc;}
 
 void 		AbstractVM::valid_data(std::string const &str){
 
-	std::cmatch		result;
+//	std::cmatch		result;
 
 	std::regex 		arg("[ \t]*((push)|(assert))[ \t]+?((int8)|(int16)|(int32)|(float)|(double))[ \t]*?\\(([-]?[0-9]*.[0-9]*)\\)[ \t]*([;].*)?");
 	std::regex 		fun("[\t ]*((exit)|(print)|(mod)|(div)|(mul)|(sub)|(add)|(dump)|(pop)|(sum)|(avr)|(sort)|(min)|(max))[\t ]*([;].*)?");
@@ -86,7 +86,7 @@ void 		AbstractVM::add_data(std::string const &str){
     if (regex_match(str, arg))
     {
         std::regex_search(str.begin(), str.end(), result, arg);
-        (this->*arg_exe[result.str(1)])(getType(result.str(4)), result.str(10));
+        (this->*arg_exe[result.str(1)])(result.str(10), getType(result.str(4)));
     }
     else if (regex_match(str, fun))
     {
