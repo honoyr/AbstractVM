@@ -41,6 +41,43 @@ public:
     std::string const & toString( void )    const { return str; }
 	int					getPrecision(void)  const { return (static_cast<int>(type)); }
 
+    IOperand const * operator+( IOperand const & rhs ) const {
+
+        std::cout   <<  rhs.getPrecision() // DELETE
+                    << std::end
+                    << this->getPrecision()
+                    << std::end;
+
+
+        if (rhs.getPrecision() > this->getPrecision())
+             return (rhs + *this);
+        return (factory.createOperand(this->type, std::to_string(
+                convert_type(rhs.toString()) + convert_type(this->toString()))));
+    }
+
+    IOperand const * operator-( IOperand const & rhs ) const {
+
+        std::cout   <<  rhs.getPrecision() // DELETE
+                    << std::end
+                    << this->getPrecision()
+                    << std::end;
+
+        if (rhs.getPrecision() > this->getPrecision())
+        {
+            if (rhs.getType() == Int16)
+            {
+
+            }
+            if (rhs.getType() == Int32)
+            if (rhs.getType() == Float)
+            if (rhs.getType() == Double)
+                return ()
+            return (rhs + *this);
+        }
+        return (factory.createOperand(this->type, std::to_string(
+                convert_type(rhs.toString()) - convert_type(this->toString()))));
+    }
+
 private:
     std::string     str;
     Factory			factory;
@@ -65,13 +102,13 @@ private:
     T				    convert_type(std::string str) const
     {
         if (type == Int8)
-            return ((static_cast<char>(atoi(str.c_str()))));
+            return ((static_cast<char>(std::stoi(str))));
         else if (type == Int16)
-            return ((static_cast<short int>(atoi(str.c_str()))));
+            return ((static_cast<short int>(std::stoi(str))));
         else if (type == Int32)
-            return ((static_cast<int>(atof(str.c_str()))));
+            return ((static_cast<int>(std::stoi(str))));
         else if (type == Float)
-            return ((atof(str.c_str())));
+            return (std::stof(str));
         else
             return (std::stod(str));
     }

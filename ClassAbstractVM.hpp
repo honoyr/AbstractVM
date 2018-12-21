@@ -112,6 +112,20 @@ class AbstractVM {
         std::string                 _stack_s;
     };
 
+    class LessThanTwoArgExcept : public std::exception{
+    public:
+        LessThanTwoArgExcept();
+        LessThanTwoArgExcept(std::string nline) : _nline(nline) {}
+        const char *what() const throw()
+        {
+            std::string error_exept("Error: Stack has less than 2 arguments - line " + _nline);
+//            error_exept = (error_exept + _nline);
+            return (error_exept.c_str());
+        }
+    private:
+        std::string                 _nline;
+    };
+
     private:
         Factory							factory;
         std::vector<const IOperand *>	v;
