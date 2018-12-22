@@ -126,6 +126,9 @@ class AbstractVM {
         std::string                 _nline;
     };
 
+
+
+
     private:
         Factory							factory;
         std::vector<const IOperand *>	v;

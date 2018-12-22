@@ -42,7 +42,19 @@ public:
 	int					getPrecision(void)  const { return (static_cast<int>(type)); }
 
     template <typename Z>
-    IOperand const *    
+    IOperand const *    convert_diff_type(Z &a, Z &b, eOperandType type, char c) const
+    {
+        if (b == 0)
+            throw DivideByZeroExcept();
+        if (c == '-')
+            return (factory.createOperand(type, std::to_string(a - b)));
+        if (c == '/')
+            return (factory.createOperand(type, std::to_string(a / b)));
+        else
+        {
+            
+        }
+    }
 
     IOperand const * operator+( IOperand const & rhs ) const {
 
@@ -67,19 +79,15 @@ public:
 
         if (rhs.getPrecision() > this->getPrecision())
         {
-            std::cout   << "Bigger"
-                        << std::endl
-                        << rhs.getPrecision() // DELETE
-                        << std::endl;
-//            if (rhs.getType() == Int16)
-//            {
-//
-//            }
-//            if (rhs.getType() == Int32)
-//            if (rhs.getType() == Float)
-//            if (rhs.getType() == Double)
-//                return ()
-//            return (rhs + *this);
+            if (rhs.getType() == Int16)
+                return (convert_diff_type(static_cast<short>(std::stoi(this->str)),
+                                          static_cast<short>(std::stoi(rhs.toString()), rhs.getType(), '-');
+            else if (rhs.getType() == Int32)
+                return (convert_diff_type((std::stoi(this->str)), (std::stoi(rhs.toString()), rhs.getType(), '-');
+            else if (rhs.getType() == Float)
+                return (convert_diff_type(std::stof(this->str), (std::stof(rhs.toString()), rhs.getType(), '-');
+            else if (rhs.getType() == Double)
+                return (convert_diff_type(std::stod(this->str), (std::stod(rhs.toString()), rhs.getType(), '-');
         }
         return (factory.createOperand(this->type, std::to_string(
                 convert_type(rhs.toString()) - convert_type(this->toString()))));
@@ -92,6 +100,18 @@ public:
         return (factory.createOperand(this->type, std::to_string(
                 convert_type(rhs.toString()) * convert_type(this->toString()))));
     }
+
+
+    class DivideByZeroExcept : public std::exception{
+    public:
+        DivideByZeroExcept(void){}
+        const char *what() const throw()
+        {
+            std::string error_exept("Error: It's bad practise divide by '0' ");
+            return (error_exept.c_str());
+        }
+    };
+
 
 private:
     std::string     str;
