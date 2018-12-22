@@ -41,12 +41,15 @@ public:
     std::string const & toString( void )    const { return str; }
 	int					getPrecision(void)  const { return (static_cast<int>(type)); }
 
+    template <typename Z>
+    IOperand const *    
+
     IOperand const * operator+( IOperand const & rhs ) const {
 
-        std::cout   <<  rhs.getPrecision() // DELETE
-                    << std::end
-                    << this->getPrecision()
-                    << std::end;
+//        std::cout   <<  rhs.getPrecision() // DELETE
+//                    << std::endl
+//                    << this->getPrecision()
+//                    << std::endl;
 
 
         if (rhs.getPrecision() > this->getPrecision())
@@ -58,24 +61,36 @@ public:
     IOperand const * operator-( IOperand const & rhs ) const {
 
         std::cout   <<  rhs.getPrecision() // DELETE
-                    << std::end
+                    << std::endl
                     << this->getPrecision()
-                    << std::end;
+                    << std::endl;
 
         if (rhs.getPrecision() > this->getPrecision())
         {
-            if (rhs.getType() == Int16)
-            {
-
-            }
-            if (rhs.getType() == Int32)
-            if (rhs.getType() == Float)
-            if (rhs.getType() == Double)
-                return ()
-            return (rhs + *this);
+            std::cout   << "Bigger"
+                        << std::endl
+                        << rhs.getPrecision() // DELETE
+                        << std::endl;
+//            if (rhs.getType() == Int16)
+//            {
+//
+//            }
+//            if (rhs.getType() == Int32)
+//            if (rhs.getType() == Float)
+//            if (rhs.getType() == Double)
+//                return ()
+//            return (rhs + *this);
         }
         return (factory.createOperand(this->type, std::to_string(
                 convert_type(rhs.toString()) - convert_type(this->toString()))));
+    }
+
+    IOperand const * operator*( IOperand const & rhs ) const {
+
+        if (rhs.getPrecision() > this->getPrecision())
+            return (rhs * *this);
+        return (factory.createOperand(this->type, std::to_string(
+                convert_type(rhs.toString()) * convert_type(this->toString()))));
     }
 
 private:

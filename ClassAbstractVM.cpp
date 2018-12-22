@@ -85,28 +85,28 @@ void 		AbstractVM::add_data(std::string const &str){
     this->i++;
     if (regex_match(str, arg))
     {
-        std::cout   << result.operator[](2)
-                    << std::endl
-                    << "first"
-                    << result.str()
-                    << result.position()
-                    << std::endl
-                    << result.str(4)
-                    << std::endl
-                    << result.str(0)
-                    << std::endl
-                    << result.str(2)
-                    << std::endl
-                    << result.str(3)
-                    << std::endl
-                    << result.str(5)
-                    << std::endl
-                    << result.str(6)
-                    << std::endl
-                    << result.str(7)
-                    << std::endl
-                    << result.str(8)
-                    << std::endl;
+//        std::cout   << result.operator[](2)
+//                    << std::endl
+//                    << "first"
+//                    << result.str()
+//                    << result.position()
+//                    << std::endl
+//                    << result.str(4)
+//                    << std::endl
+//                    << result.str(0)
+//                    << std::endl
+//                    << result.str(2)
+//                    << std::endl
+//                    << result.str(3)
+//                    << std::endl
+//                    << result.str(5)
+//                    << std::endl
+//                    << result.str(6)
+//                    << std::endl
+//                    << result.str(7)
+//                    << std::endl
+//                    << result.str(8)
+//                    << std::endl;
 
         std::regex_search(str.begin(), str.end(), result, arg);
         (this->*arg_exe[result.str(1)])(result.str(10), getType(result.str(4)));
