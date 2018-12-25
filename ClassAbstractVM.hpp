@@ -46,9 +46,22 @@ class AbstractVM {
 
         void            Push(std::string const & str, eOperandType type);
         void       	    Assert(std::string const & str, eOperandType type);
+        void       	    Pop(void);
 
-        void	        add(void);
-        void	        sub(void);
+        void	        Add(void);
+        void	        Sub(void);
+        void	        Mul(void);
+        void	        Div(void);
+        void	        Mod(void);
+        void	        Dump(void);
+        void	        Print(void);
+
+        void            Sum(void);
+        void            Max(void);
+        void            Min(void);
+        void            Avgr(void);
+        void            Sort(void);
+
 
 
 	class LexicalErrorExcept : public std::exception{
@@ -126,7 +139,21 @@ class AbstractVM {
         std::string                 _nline;
     };
 
-
+    class PrintExcept : public std::exception{
+    public:
+        PrintExcept();
+        PrintExcept(std::string nline, std::string str)
+                : _nline(nline), _str(str) {}
+        const char *what() const throw()
+        {
+            std::string error_exept("Error: Unprintable character - line "
+                                    + _nline + " --> " + _str);
+            return (error_exept.c_str());
+        }
+    private:
+        std::string                 _nline;
+        std::string	                _str;
+    };
 
 
     private:

@@ -137,7 +137,7 @@ void	    AbstractVM::Assert(std::string const & str, eOperandType type){
 
 }
 
-void	    AbstractVM::add(void){
+void	    AbstractVM::Add(void){
     if (v.size() < 2)
         throw LessThanTwoArgExcept(std::to_string(this->i));
     const IOperand *a = v.back();
@@ -150,7 +150,7 @@ void	    AbstractVM::add(void){
     delete b;
     delete c;
 }
-void	    AbstractVM::sub(void){
+void	    AbstractVM::Sub(void){
     if (v.size() < 2)
         throw LessThanTwoArgExcept(std::to_string(this->i));
     const IOperand *a = v.back();
@@ -163,6 +163,91 @@ void	    AbstractVM::sub(void){
     delete b;
     delete c;
 }
+
+void	    AbstractVM::Mul(void){
+    if (v.size() < 2)
+        throw LessThanTwoArgExcept(std::to_string(this->i));
+    const IOperand *a = v.back();
+    v.pop_back();
+    const IOperand *b = v.back();
+    v.pop_back();
+    const IOperand *c = *a * *b;
+    Push(c->toString(), c->getType());
+    delete a;
+    delete b;
+    delete c;
+}
+
+
+void	    AbstractVM::Div(void){
+    if (v.size() < 2)
+        throw LessThanTwoArgExcept(std::to_string(this->i));
+    const IOperand *a = v.back();
+    v.pop_back();
+    const IOperand *b = v.back();
+    v.pop_back();
+    const IOperand *c = *a / *b;
+    Push(c->toString(), c->getType());
+    delete a;
+    delete b;
+    delete c;
+}
+
+void	    AbstractVM::Mod(void){
+    if (v.size() < 2)
+        throw LessThanTwoArgExcept(std::to_string(this->i));
+    const IOperand *a = v.back();
+    v.pop_back();
+    const IOperand *b = v.back();
+    v.pop_back();
+    const IOperand *c = *a % *b;
+    Push(c->toString(), c->getType());
+    delete a;
+    delete b;
+    delete c;
+}
+
+void	    AbstractVM::Pop(void){
+    if (v.empty())
+        throw EmptyStackExcept(std::to_string(this->i));
+    else
+        v.pop_back();
+}
+
+void	    AbstractVM::Dump(void){
+    if (v.empty())
+        throw EmptyStackExcept(std::to_string(this->i));
+    else
+    {
+        for(const auto & x : v)
+            std::cout   << x->toString()
+                        << std::endl;
+    }
+}
+
+void	    AbstractVM::Print(void){
+    if (v.empty())
+        throw EmptyStackExcept(std::to_string(this->i));
+    else
+    {
+        if (v.back()->getType() != Int8)
+            throw PrintExcept(v.back()->toString(), std::to_string(this->i));
+        std::cout   << static_cast<char>(std::stoi(v.back()->toString()));
+    }
+}
+
+void	    AbstractVM::Sum(void){
+    if (v.size() < 2)
+        throw LessThanTwoArgExcept(std::to_string(this->i));
+    const IOperand *a = factory.createOperand(Int32, std::to_string(0));
+
+    for(int i = 0; i < v.size(); i++)
+        a = *a + *(v[i]);
+    std::cout   << a->toString()
+                << std::endl;
+    delete a;
+}
+
 
 //EXEPTION______________________________________________________________________________
 //
