@@ -73,8 +73,18 @@ void 		AbstractVM::add_data(std::string const &str){
     };
 
     std::map<std::string, void (AbstractVM::*)()> fun_exe = {
-            {"add", &AbstractVM::add},
-            {"sub", &AbstractVM::sub}
+            {"add", &AbstractVM::Add},
+            {"sub", &AbstractVM::Sub},
+            {"mul", &AbstractVM::Mul},
+            {"div", &AbstractVM::Div},
+            {"mod", &AbstractVM::Mod},
+            {"dump", &AbstractVM::Dump},
+            {"print", &AbstractVM::Print},
+            {"sum", &AbstractVM::Sum},
+            {"max", &AbstractVM::Max},
+            {"min", &AbstractVM::Min},
+            {"avrg", &AbstractVM::Avrg},
+            {"sort", &AbstractVM::Sort}
     };
     std::smatch		result;
 
@@ -248,6 +258,20 @@ void	    AbstractVM::Sum(void){
     delete a;
 }
 
+void	    AbstractVM::Max(void){
+    if (v.size() < 2)
+        throw LessThanTwoArgExcept(std::to_string(this->i));
+    const IOperand *a = factory.createOperand(Int32, std::to_string(0));
+
+    for(int i = 0; i < v.size(); i++)
+    {
+        if (*a < *(v[i]))
+            a = (v[i]);
+    }
+    std::cout   << a->toString()
+                << std::endl;
+    delete a;
+}
 
 //EXEPTION______________________________________________________________________________
 //

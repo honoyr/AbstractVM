@@ -59,7 +59,7 @@ class AbstractVM {
         void            Sum(void);
         void            Max(void);
         void            Min(void);
-        void            Avgr(void);
+        void            Avrg(void);
         void            Sort(void);
 
 

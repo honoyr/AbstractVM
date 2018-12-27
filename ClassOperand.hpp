@@ -54,12 +54,34 @@ public:
         else if (c == '%')
         {
             if (typeid(Z) == typeid(float) || typeid(Z) == typeid(double))
-                return (factory.createOperand(type, std::to_string(fmod(a, b)));
+                return (factory.createOperand(type, std::to_string(fmod(a, b))));
             else
                 return (factory.createOperand(type, std::to_string((static_cast<int>(a)
                                                                     % static_cast<int>(b)))));
         }
     }
+
+//    template <typename X>
+//    bool    compare(X &a, X &b, eOperandType type, char c) const
+//    {
+//
+//        if (c == '<')
+//            return (factory.createOperand(type, std::to_string(a - b)));
+//        else if (c == '>')
+//            return (factory.createOperand(type, std::to_string(a / b)));
+//        else if (c == '==')
+//        {
+//            if (typeid(Z) == typeid(float) || typeid(Z) == typeid(double))
+//                return (factory.createOperand(type, std::to_string(fmod(a, b)));
+//            else
+//                return (factory.createOperand(type, std::to_string((static_cast<int>(a)
+//                                                                    % static_cast<int>(b)))));
+//        }
+//        else
+//        {
+//
+//        }
+//    }
 
     IOperand const * operator+( IOperand const & rhs ) const {
 
@@ -86,13 +108,13 @@ public:
         {
             if (rhs.getType() == Int16)
                 return (convert_diff_type(static_cast<short>(std::stoi(this->str)),
-                                          static_cast<short>(std::stoi(rhs.toString()), rhs.getType(), '-');
+                                          static_cast<short>(std::stoi(rhs.toString()), rhs.getType(), '-')));
             else if (rhs.getType() == Int32)
-                return (convert_diff_type((std::stoi(this->str)), (std::stoi(rhs.toString()), rhs.getType(), '-');
+                return (convert_diff_type((std::stoi(this->str)), (std::stoi(rhs.toString()), rhs.getType(), '-')));
             else if (rhs.getType() == Float)
-                return (convert_diff_type(std::stof(this->str), (std::stof(rhs.toString()), rhs.getType(), '-');
+                return (convert_diff_type(std::stof(this->str), (std::stof(rhs.toString()), rhs.getType(), '-')));
             else if (rhs.getType() == Double)
-                return (convert_diff_type(std::stod(this->str), (std::stod(rhs.toString()), rhs.getType(), '-');
+                return (convert_diff_type(std::stod(this->str), (std::stod(rhs.toString()), rhs.getType(), '-')));
         }
         return (factory.createOperand(this->type, std::to_string(
                 convert_type(rhs.toString()) - convert_type(this->toString()))));
@@ -108,48 +130,78 @@ public:
 
     IOperand const * operator/( IOperand const & rhs ) const {
 
-        std::cout   <<  rhs.getPrecision() // DELETE
-                    << std::endl
-                    << this->getPrecision()
-                    << std::endl;
-
         if (rhs.getPrecision() > this->getPrecision())
         {
             if (rhs.getType() == Int16)
-                return (convert_diff_type(static_cast<short>(std::stoi(this->str)),
-                                          static_cast<short>(std::stoi(rhs.toString()), rhs.getType(), '/');
+                return (convert_diff_type((static_cast<short>(std::stoi(this->str)),
+                                          (static_cast<short>(std::stoi(rhs.toString()))), rhs.getType(), '/'));
             else if (rhs.getType() == Int32)
-                return (convert_diff_type((std::stoi(this->str)), (std::stoi(rhs.toString()), rhs.getType(), '/');
+                return (convert_diff_type((std::stoi(this->str)), (std::stoi(rhs.toString())), rhs.getType(), '/'));
             else if (rhs.getType() == Float)
-                return (convert_diff_type(std::stof(this->str), (std::stof(rhs.toString()), rhs.getType(), '/');
+                return (convert_diff_type((std::stof(this->str)), (std::stof(rhs.toString())), rhs.getType(), '/'));
             else if (rhs.getType() == Double)
-                return (convert_diff_type(std::stod(this->str), (std::stod(rhs.toString()), rhs.getType(), '/');
+                return (convert_diff_type((std::stod(this->str)), (std::stod(rhs.toString())), rhs.getType(), '/'));
         }
+        if (convert_type(rhs.toString()) == 0)
+            throw DivideByZeroExcept();
         return (factory.createOperand(this->type, std::to_string(
                 convert_type(rhs.toString()) / convert_type(this->toString()))));
     }
 
     IOperand const * operator%( IOperand const & rhs ) const {
 
-        std::cout   <<  rhs.getPrecision() // DELETE
-                    << std::endl
-                    << this->getPrecision()
-                    << std::endl;
-
         if (rhs.getPrecision() > this->getPrecision())
         {
             if (rhs.getType() == Int16)
-                return (convert_diff_type(static_cast<short>(std::stoi(this->str)),
-                                          static_cast<short>(std::stoi(rhs.toString()), rhs.getType(), '%');
+                return (convert_diff_type((static_cast<short>(std::stoi(this->str))),
+                                          (static_cast<short>(std::stoi(rhs.toString()))), rhs.getType(), '%'));
             else if (rhs.getType() == Int32)
-                return (convert_diff_type((std::stoi(this->str)), (std::stoi(rhs.toString()), rhs.getType(), '%');
+                return (convert_diff_type((std::stoi(this->str)), (std::stoi(rhs.toString())), rhs.getType(), '%'));
             else if (rhs.getType() == Float)
-                return (convert_diff_type(std::stof(this->str), (std::stof(rhs.toString()), rhs.getType(), '%');
+                return (convert_diff_type((std::stof(this->str)), (std::stof(rhs.toString())), rhs.getType(), '%'));
             else if (rhs.getType() == Double)
-                return (convert_diff_type(std::stod(this->str), (std::stod(rhs.toString()), rhs.getType(), '%');
+                return (convert_diff_type((std::stod(this->str)), (std::stod(rhs.toString())), rhs.getType(), '%'));
+
         }
+        if (convert_type(rhs.toString()) == 0)
+            throw DivideByZeroExcept();
         return (factory.createOperand(this->type, std::to_string(
                 convert_type(rhs.toString()) % convert_type(this->toString()))));
+    }
+
+
+//    bool            operator<( IOperand const & rhs ) const {
+//        if (rhs.getPrecision() > this->getPrecision())
+//        {
+//            if (rhs.getType() == Int16)
+//                return (compare(static_cast<short>(std::stoi(this->str)),
+//                                          static_cast<short>(std::stoi(rhs.toString()), '<');
+//            else if (rhs.getType() == Int32)
+//                return (compare((std::stoi(this->str)), (std::stoi(rhs.toString()), '<');
+//            else if (rhs.getType() == Float)
+//                return (compare(std::stof(this->str), (std::stof(rhs.toString()), '<');
+//            else if (rhs.getType() == Double)
+//                return (compare(std::stod(this->str), (std::stod(rhs.toString()), '<');
+//        }
+//        return (compare(convert_type(rhs.toString()), convert_type(this->toString())));
+//    }
+
+    bool            operator<( IOperand const & rhs ) const {
+
+        if (rhs.getType() == Int8)
+            return ((static_cast<char>(std::stoi(this->str)) <
+                     static_cast<char>(std::stoi(rhs.toString()))));
+        if (rhs.getType() == Int16)
+            return ((static_cast<short>(std::stoi(this->str)) <
+                    static_cast<short>(std::stoi(rhs.toString()))));
+        else if (rhs.getType() == Int32)
+            return ((std::stoi(this->str)) < (std::stoi(rhs.toString())));
+        else if (rhs.getType() == Float)
+            return ((std::stof(this->str) < (std::stof(rhs.toString()))));
+        else if (rhs.getType() == Double)
+            return ((std::stod(this->str) < (std::stod(rhs.toString()))));
+        else
+            return ((convert_type(rhs.toString()) < convert_type(this->toString())));
     }
 
     class DivideByZeroExcept : public std::exception{
@@ -191,7 +243,7 @@ private:
         else if (type == Int16)
             return ((static_cast<short int>(std::stoi(str))));
         else if (type == Int32)
-            return ((static_cast<int>(std::stoi(str))));
+            return ((std::stoi(str)));
         else if (type == Float)
             return (std::stof(str));
         else
