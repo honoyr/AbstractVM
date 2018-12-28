@@ -35,14 +35,16 @@ class AbstractVM {
         AbstractVM &operator=(AbstractVM const &vm);
         ~AbstractVM(void);
 
-//		Factory		    getFactory(void);
         eOperandType    getType(std::string const &type);
 		bool 		    getExist_error(void);
 		bool 		    getExist_exit(void);
 		bool 		    getEsc(void);
 
+        void            setIterLine(void);
+        void            setExit(void);
+
         void 		    valid_data(std::string const &str);
-        void            add_data(std::string const &str);
+        void            data_management(std::string const &str);
 
         void            Push(std::string const & str, eOperandType type);
         void       	    Assert(std::string const & str, eOperandType type);
@@ -65,14 +67,10 @@ class AbstractVM {
         void            Asort(void);
         void            Dsort(void);
 
-
-
 	class LexicalErrorExcept : public std::exception{
 		public:
-            LexicalErrorExcept();
             LexicalErrorExcept(std::string nline, std::string str)
                     : _nline(nline), _str(str) {}
-            ~LexicalErrorExcept();
         const char *what() const throw()
             {
                 std::string error_exept("Error: Lexical - line ");
@@ -86,9 +84,7 @@ class AbstractVM {
 
 	class DoubExitExcept : public std::exception{
 		public:
-			DoubExitExcept();
 			DoubExitExcept(std::string nline) : _nline(nline) {}
-            ~DoubExitExcept();
         const char *what() const throw()
 			{
 				std::string error_exept("Error: Double exit - line ");
@@ -101,9 +97,7 @@ class AbstractVM {
 
     class EmptyStackExcept : public std::exception{
     public:
-        EmptyStackExcept();
         EmptyStackExcept(std::string nline) : _nline(nline) {}
-        ~EmptyStackExcept();
         const char *what() const throw()
         {
             std::string error_exept("Error: Stack is empty - line " + _nline);
@@ -116,10 +110,8 @@ class AbstractVM {
 
     class ErrorAssertExcept : public std::exception{
     public:
-        ErrorAssertExcept();
         ErrorAssertExcept(std::string nline, std::string assert_s, std::string stack_s)
                 : _nline(nline), _assert_s(assert_s), _stack_s(stack_s) {}
-        ~ErrorAssertExcept();
         const char *what() const throw()
         {
             std::string error_exept("Error: Assertion is fail --> "
@@ -134,9 +126,7 @@ class AbstractVM {
 
     class LessThanTwoArgExcept : public std::exception{
     public:
-        LessThanTwoArgExcept();
         LessThanTwoArgExcept(std::string nline) : _nline(nline) {}
-        ~LessThanTwoArgExcept();
         const char *what() const throw()
         {
             std::string error_exept("Error: Stack has less than 2 arguments - line " + _nline);
@@ -149,10 +139,8 @@ class AbstractVM {
 
     class PrintExcept : public std::exception{
     public:
-        PrintExcept();
         PrintExcept(std::string nline, std::string str)
                 : _nline(nline), _str(str) {}
-        ~PrintExcept();
         const char *what() const throw()
         {
             std::string error_exept("Error: Unprintable character - line "
@@ -166,15 +154,12 @@ class AbstractVM {
 
     class NoExistExitExcept : public std::exception{
     public:
-        NoExistExitExcept(void){}
-        ~NoExistExitExcept(void){}
         const char *what() const throw()
         {
             std::string error_exept("Error: The command 'exit' no found");
             return (error_exept.c_str());
         }
     };
-
 
     private:
         Factory							factory;

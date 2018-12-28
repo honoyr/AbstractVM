@@ -23,7 +23,9 @@ AbstractVM&		AbstractVM::operator=(AbstractVM const &vm){
     exist_error = getExist_error();
     exist_exit  = getExist_exit();
     esc = getEsc();
-	return *this;}
+	return *this;
+}
+
 AbstractVM::~AbstractVM(void){}
 
 eOperandType        AbstractVM::getType(std::string const &type) {
@@ -36,23 +38,25 @@ eOperandType        AbstractVM::getType(std::string const &type) {
     };
     return (types[type]);
 }
+
 bool 		AbstractVM::getExist_error(void){
     if (!this->exist_exit)
         throw NoExistExitExcept();
-    return this->exist_error;}
-bool 		AbstractVM::getExist_exit(void){return this->exist_exit;}
-bool 		AbstractVM::getEsc(void){ return this->esc;}
+    return this->exist_error;
+}
+
+bool 		AbstractVM::getExist_exit(void)     {return this->exist_exit;}
+bool 		AbstractVM::getEsc(void)            {return this->esc;}
+
+void        AbstractVM::setIterLine()           {this->i = 0;}
+void        AbstractVM::setExit()               {this->esc = true;}
 
 void 		AbstractVM::valid_data(std::string const &str){
-
-//	std::cmatch		result;
-
 	std::regex 		arg("[ \t]*((push)|(assert))[ \t]+?((int8)|(int16)|(int32)|(float)|(double))[ \t]*?\\(([-]?[0-9]*.[0-9]*)\\)[ \t]*([;].*)?");
 	std::regex 		fun("[\t ]*((exit)|(print)|(mod)|(div)|(mul)|(sub)|(add)|(dump)|(pop)|(sum)|(avrg)|(asort)|(dsort)|(min)|(max))[\t ]*([;].*)?");
 	std::regex		comm("[\t ]*([;].*)?");
 
 	this->i++;
-
     if (!regex_match(str, arg) && !regex_match(str, fun) && !regex_match(str, comm)){
         exist_error = true;
         throw LexicalErrorExcept(std::to_string(this->i), str);
@@ -65,10 +69,9 @@ void 		AbstractVM::valid_data(std::string const &str){
         }
         exist_exit = true;
     }
-
 }
 
-void 		AbstractVM::add_data(std::string const &str){
+void 		AbstractVM::data_management(std::string const &str){
 
     std::map<std::string, void (AbstractVM::*)(std::string const &str, eOperandType type)> arg_exe ={
             {"assert", &AbstractVM::Assert},
@@ -92,8 +95,8 @@ void 		AbstractVM::add_data(std::string const &str){
             {"pop", &AbstractVM::Pop},
             {"exit", &AbstractVM::Exit}
     };
-    std::smatch		result;
 
+    std::smatch		result;
     std::regex 		arg("[ \t]*((push)|(assert))[ \t]+?((int8)|(int16)|(int32)|(float)|(double))[ \t]*?\\(([-]?[0-9]*.[0-9]*)\\)[ \t]*([;].*)?");
     std::regex 		fun("[\t ]*((exit)|(print)|(mod)|(div)|(mul)|(sub)|(add)|(dump)|(pop)|(sum)|(avrg)|(asort)|(dsort)|(min)|(max))[\t ]*([;].*)?");
     std::regex		comm("[\t ]*([;].*)?");
@@ -140,8 +143,7 @@ void 		AbstractVM::add_data(std::string const &str){
 }
 
 void	    AbstractVM::Push(std::string const & str, eOperandType type){
-    v.push_back(factory.createOperand(type, str));
-}
+    v.push_back(factory.createOperand(type, str)); }
 
 void	    AbstractVM::Assert(std::string const & str, eOperandType type){
     const IOperand     *assert;
@@ -150,7 +152,6 @@ void	    AbstractVM::Assert(std::string const & str, eOperandType type){
         throw EmptyStackExcept(std::to_string(this->i));
     if(!(assert == factory.createOperand(type, str)))
         throw ErrorAssertExcept(std::to_string(this->i), v.back()->toString(), str);
-
 }
 
 void         AbstractVM::Exit(void){ esc = true; }
