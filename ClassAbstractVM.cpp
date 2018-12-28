@@ -69,7 +69,9 @@ void 		AbstractVM::add_data(std::string const &str){
 
     std::map<std::string, void (AbstractVM::*)(std::string const &str, eOperandType type)> arg_exe ={
             {"assert", &AbstractVM::Assert},
-            {"push", &AbstractVM::Push}
+            {"push", &AbstractVM::Push},
+            {"pop", &AbstractVM::Pop},
+            {"exit", &AbstractVM::Exit}
     };
 
     std::map<std::string, void (AbstractVM::*)()> fun_exe = {
@@ -84,7 +86,8 @@ void 		AbstractVM::add_data(std::string const &str){
             {"max", &AbstractVM::Max},
             {"min", &AbstractVM::Min},
             {"avrg", &AbstractVM::Avrg},
-            {"sort", &AbstractVM::Sort}
+            {"sort", &AbstractVM::Asort},
+            {"sort", &AbstractVM::Dsort}
     };
     std::smatch		result;
 
@@ -145,6 +148,15 @@ void	    AbstractVM::Assert(std::string const & str, eOperandType type){
     if(!(assert == factory.createOperand(type, str)))
         throw ErrorAssertExcept(std::to_string(this->i), v.back()->toString(), str);
 
+}
+
+void         AbstractVM::Exit(void){ esc = true; }
+
+void	    AbstractVM::Pop(void){
+    if (v.empty())
+        throw EmptyStackExcept(std::to_string(this->i));
+    else
+        v.pop_back();
 }
 
 void	    AbstractVM::Add(void){
@@ -217,13 +229,6 @@ void	    AbstractVM::Mod(void){
     delete c;
 }
 
-void	    AbstractVM::Pop(void){
-    if (v.empty())
-        throw EmptyStackExcept(std::to_string(this->i));
-    else
-        v.pop_back();
-}
-
 void	    AbstractVM::Dump(void){
     if (v.empty())
         throw EmptyStackExcept(std::to_string(this->i));
@@ -259,18 +264,94 @@ void	    AbstractVM::Sum(void){
 }
 
 void	    AbstractVM::Max(void){
-    if (v.size() < 2)
-        throw LessThanTwoArgExcept(std::to_string(this->i));
-    const IOperand *a = factory.createOperand(Int32, std::to_string(0));
-
-    for(int i = 0; i < v.size(); i++)
+    if (v.empty())
+        throw EmptyStackExcept(std::to_string(this->i));
+    else
     {
-        if (*a < *(v[i]))
-            a = (v[i]);
+        const IOperand *a = factory.createOperand(Int32, std::to_string(0));
+
+        for(int i = 0; i < v.size(); i++)
+        {
+            if (*a < *(v[i]))
+                a = (v[i]);
+        }
+        std::cout   << a->toString()
+                    << std::endl;
+        delete a;
     }
-    std::cout   << a->toString()
-                << std::endl;
-    delete a;
+}
+
+void	    AbstractVM::Min(void){
+    if (v.empty())
+        throw EmptyStackExcept(std::to_string(this->i));
+    else {
+        const IOperand *a = factory.createOperand(Int32, std::to_string(0));
+
+        for (int i = 0; i < v.size(); i++) {
+            if (*a > *(v[i]))
+                a = (v[i]);
+        }
+        std::cout << a->toString()
+                  << std::endl;
+        delete a;
+    }
+}
+
+void	    AbstractVM::Avrg(void){
+    if (v.empty())
+        throw EmptyStackExcept(std::to_string(this->i));
+    else {
+        const IOperand *a = factory.createOperand(Int32, std::to_string(0));
+
+        for (int i = 0; i < v.size(); i++)
+            a = *a + *(v[i]);
+        a = *a / *factory.createOperand(a->getType(), std::to_string(v.size()));;
+        std::cout << a->toString()
+                  << std::endl;
+        delete a;
+    }
+}
+
+void	    AbstractVM::Asort(void){
+    if (v.empty())
+        throw EmptyStackExcept(std::to_string(this->i));
+    else {
+        const IOperand *tmp = factory.createOperand(Int32, std::to_string(0));
+
+        for (int i = 0; i < v.size(); i++)
+            for (int j = 0; j < v.size(); j++)
+            {
+                if (i != j && v[i] > v[j])
+                {
+                    tmp = v[j];
+                    v[j] = v[i];
+                    v[i] = tmp;
+
+                }
+            }
+        delete tmp;
+    }
+}
+
+void	    AbstractVM::Dsort(void){
+    if (v.empty())
+        throw EmptyStackExcept(std::to_string(this->i));
+    else {
+        const IOperand *tmp = factory.createOperand(Int32, std::to_string(0));
+
+        for (int i = 0; i < v.size(); i++)
+            for (int j = 0; j < v.size(); j++)
+            {
+                if (i != j && v[i] < v[j])
+                {
+                    tmp = v[j];
+                    v[j] = v[i];
+                    v[i] = tmp;
+
+                }
+            }
+        delete tmp;
+    }
 }
 
 //EXEPTION______________________________________________________________________________

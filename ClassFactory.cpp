@@ -22,16 +22,7 @@
 //
 //Factory::Factory &operator=(Factory const &rhs){ return *this; }
 
-IOperand const * Factory::createOperand( eOperandType type, std::string const & value ) const {
-    IOperand const	*(Factory::*method[])(std::string const &value) const = {
-		&Factory::createInt8,
-		&Factory::createInt16,
-		&Factory::createInt32,
-		&Factory::createFloat,
-		&Factory::createDouble
-	};
-    return ((this->*method[type])(value));
-}
+
 
 IOperand const * Factory::createInt8( std::string const & value ) const {
 	return (new Operand<char>(static_cast<char>(std::stoi(value))));
@@ -49,3 +40,13 @@ IOperand const * Factory::createDouble( std::string const & value ) const {
 	return (new Operand<double>(static_cast<double>(std::stod(value))));
 }
 
+IOperand const * Factory::createOperand( eOperandType type, std::string const & value ) const {
+    IOperand const	*(Factory::*method[])(std::string const &value) const = {
+            &Factory::createInt8,
+            &Factory::createInt16,
+            &Factory::createInt32,
+            &Factory::createFloat,
+            &Factory::createDouble
+    };
+    return ((this->*method[type])(value));
+}

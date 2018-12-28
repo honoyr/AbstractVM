@@ -47,12 +47,14 @@ class AbstractVM {
         void            Push(std::string const & str, eOperandType type);
         void       	    Assert(std::string const & str, eOperandType type);
         void       	    Pop(void);
+        void       	    Exit(void);
 
         void	        Add(void);
         void	        Sub(void);
         void	        Mul(void);
         void	        Div(void);
         void	        Mod(void);
+
         void	        Dump(void);
         void	        Print(void);
 
@@ -60,7 +62,8 @@ class AbstractVM {
         void            Max(void);
         void            Min(void);
         void            Avrg(void);
-        void            Sort(void);
+        void            Asort(void);
+        void            Dsort(void);
 
 
 
