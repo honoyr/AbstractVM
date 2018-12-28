@@ -72,7 +72,8 @@ class AbstractVM {
             LexicalErrorExcept();
             LexicalErrorExcept(std::string nline, std::string str)
                     : _nline(nline), _str(str) {}
-            const char *what() const throw()
+            ~LexicalErrorExcept();
+        const char *what() const throw()
             {
                 std::string error_exept("Error: Lexical - line ");
                 error_exept = (error_exept + _nline + " --> " + _str);
@@ -87,7 +88,8 @@ class AbstractVM {
 		public:
 			DoubExitExcept();
 			DoubExitExcept(std::string nline) : _nline(nline) {}
-			const char *what() const throw()
+            ~DoubExitExcept();
+        const char *what() const throw()
 			{
 				std::string error_exept("Error: Double exit - line ");
 				error_exept = (error_exept + _nline);
@@ -101,6 +103,7 @@ class AbstractVM {
     public:
         EmptyStackExcept();
         EmptyStackExcept(std::string nline) : _nline(nline) {}
+        ~EmptyStackExcept();
         const char *what() const throw()
         {
             std::string error_exept("Error: Stack is empty - line " + _nline);
@@ -116,6 +119,7 @@ class AbstractVM {
         ErrorAssertExcept();
         ErrorAssertExcept(std::string nline, std::string assert_s, std::string stack_s)
                 : _nline(nline), _assert_s(assert_s), _stack_s(stack_s) {}
+        ~ErrorAssertExcept();
         const char *what() const throw()
         {
             std::string error_exept("Error: Assertion is fail --> "
@@ -132,6 +136,7 @@ class AbstractVM {
     public:
         LessThanTwoArgExcept();
         LessThanTwoArgExcept(std::string nline) : _nline(nline) {}
+        ~LessThanTwoArgExcept();
         const char *what() const throw()
         {
             std::string error_exept("Error: Stack has less than 2 arguments - line " + _nline);
@@ -147,6 +152,7 @@ class AbstractVM {
         PrintExcept();
         PrintExcept(std::string nline, std::string str)
                 : _nline(nline), _str(str) {}
+        ~PrintExcept();
         const char *what() const throw()
         {
             std::string error_exept("Error: Unprintable character - line "
@@ -156,6 +162,17 @@ class AbstractVM {
     private:
         std::string                 _nline;
         std::string	                _str;
+    };
+
+    class NoExistExitExcept : public std::exception{
+    public:
+        NoExistExitExcept(void){}
+        ~NoExistExitExcept(void){}
+        const char *what() const throw()
+        {
+            std::string error_exept("Error: The command 'exit' no found");
+            return (error_exept.c_str());
+        }
     };
 
 

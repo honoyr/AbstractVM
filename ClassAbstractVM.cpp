@@ -36,7 +36,10 @@ eOperandType        AbstractVM::getType(std::string const &type) {
     };
     return (types[type]);
 }
-bool 		AbstractVM::getExist_error(void){return this->exist_error;}
+bool 		AbstractVM::getExist_error(void){
+    if (!this->exist_exit)
+        throw NoExistExitExcept();
+    return this->exist_error;}
 bool 		AbstractVM::getExist_exit(void){return this->exist_exit;}
 bool 		AbstractVM::getEsc(void){ return this->esc;}
 
@@ -45,7 +48,7 @@ void 		AbstractVM::valid_data(std::string const &str){
 //	std::cmatch		result;
 
 	std::regex 		arg("[ \t]*((push)|(assert))[ \t]+?((int8)|(int16)|(int32)|(float)|(double))[ \t]*?\\(([-]?[0-9]*.[0-9]*)\\)[ \t]*([;].*)?");
-	std::regex 		fun("[\t ]*((exit)|(print)|(mod)|(div)|(mul)|(sub)|(add)|(dump)|(pop)|(sum)|(avr)|(sort)|(min)|(max))[\t ]*([;].*)?");
+	std::regex 		fun("[\t ]*((exit)|(print)|(mod)|(div)|(mul)|(sub)|(add)|(dump)|(pop)|(sum)|(avrg)|(asort)|(dsort)|(min)|(max))[\t ]*([;].*)?");
 	std::regex		comm("[\t ]*([;].*)?");
 
 	this->i++;
@@ -70,8 +73,6 @@ void 		AbstractVM::add_data(std::string const &str){
     std::map<std::string, void (AbstractVM::*)(std::string const &str, eOperandType type)> arg_exe ={
             {"assert", &AbstractVM::Assert},
             {"push", &AbstractVM::Push},
-            {"pop", &AbstractVM::Pop},
-            {"exit", &AbstractVM::Exit}
     };
 
     std::map<std::string, void (AbstractVM::*)()> fun_exe = {
@@ -86,13 +87,15 @@ void 		AbstractVM::add_data(std::string const &str){
             {"max", &AbstractVM::Max},
             {"min", &AbstractVM::Min},
             {"avrg", &AbstractVM::Avrg},
-            {"sort", &AbstractVM::Asort},
-            {"sort", &AbstractVM::Dsort}
+            {"asort", &AbstractVM::Asort},
+            {"dsort", &AbstractVM::Dsort},
+            {"pop", &AbstractVM::Pop},
+            {"exit", &AbstractVM::Exit}
     };
     std::smatch		result;
 
     std::regex 		arg("[ \t]*((push)|(assert))[ \t]+?((int8)|(int16)|(int32)|(float)|(double))[ \t]*?\\(([-]?[0-9]*.[0-9]*)\\)[ \t]*([;].*)?");
-    std::regex 		fun("[\t ]*((exit)|(print)|(mod)|(div)|(mul)|(sub)|(add)|(dump)|(pop)|(sum)|(avr)|(sort)|(min)|(max))[\t ]*([;].*)?");
+    std::regex 		fun("[\t ]*((exit)|(print)|(mod)|(div)|(mul)|(sub)|(add)|(dump)|(pop)|(sum)|(avrg)|(asort)|(dsort)|(min)|(max))[\t ]*([;].*)?");
     std::regex		comm("[\t ]*([;].*)?");
 
     this->i++;
