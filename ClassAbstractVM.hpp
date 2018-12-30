@@ -59,6 +59,7 @@ class AbstractVM {
 
         void	        Dump(void);
         void	        Print(void);
+        void			Delim(void);
 
         void            Sum(void);
         void            Max(void);
@@ -71,7 +72,8 @@ class AbstractVM {
 		public:
             LexicalErrorExcept(std::string nline, std::string str)
                     : _nline(nline), _str(str) {}
-        const char *what() const throw()
+//           ~LexicalErrorExcept(){}
+            const char *what() const throw()
             {
                 std::string error_exept("Error: Lexical - line ");
                 error_exept = (error_exept + _nline + " --> " + _str);
@@ -85,7 +87,7 @@ class AbstractVM {
 	class DoubExitExcept : public std::exception{
 		public:
 			DoubExitExcept(std::string nline) : _nline(nline) {}
-        const char *what() const throw()
+            const char *what() const throw()
 			{
 				std::string error_exept("Error: Double exit - line ");
 				error_exept = (error_exept + _nline);

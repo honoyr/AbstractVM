@@ -53,7 +53,7 @@ void        AbstractVM::setExit()               {this->esc = true;}
 
 void 		AbstractVM::valid_data(std::string const &str){
 	std::regex 		arg("[ \t]*((push)|(assert))[ \t]+?((int8)|(int16)|(int32)|(float)|(double))[ \t]*?\\(([-]?[0-9]*.[0-9]*)\\)[ \t]*([;].*)?");
-	std::regex 		fun("[\t ]*((exit)|(print)|(mod)|(div)|(mul)|(sub)|(add)|(dump)|(pop)|(sum)|(avrg)|(asort)|(dsort)|(min)|(max))[\t ]*([;].*)?");
+	std::regex 		fun("[\t ]*((exit)|(print)|(delim)|(mod)|(div)|(mul)|(sub)|(add)|(dump)|(pop)|(sum)|(avrg)|(asort)|(dsort)|(min)|(max))[\t ]*([;].*)?");
 	std::regex		comm("[\t ]*([;].*)?");
 
 	this->i++;
@@ -86,6 +86,7 @@ void 		AbstractVM::data_management(std::string const &str){
             {"mod", &AbstractVM::Mod},
             {"dump", &AbstractVM::Dump},
             {"print", &AbstractVM::Print},
+            {"delim", &AbstractVM::Delim},
             {"sum", &AbstractVM::Sum},
             {"max", &AbstractVM::Max},
             {"min", &AbstractVM::Min},
@@ -98,7 +99,7 @@ void 		AbstractVM::data_management(std::string const &str){
 
     std::smatch		result;
     std::regex 		arg("[ \t]*((push)|(assert))[ \t]+?((int8)|(int16)|(int32)|(float)|(double))[ \t]*?\\(([-]?[0-9]*.[0-9]*)\\)[ \t]*([;].*)?");
-    std::regex 		fun("[\t ]*((exit)|(print)|(mod)|(div)|(mul)|(sub)|(add)|(dump)|(pop)|(sum)|(avrg)|(asort)|(dsort)|(min)|(max))[\t ]*([;].*)?");
+    std::regex 		fun("[\t ]*((exit)|(print)|(delim)|(mod)|(div)|(mul)|(sub)|(add)|(dump)|(pop)|(sum)|(avrg)|(asort)|(dsort)|(min)|(max))[\t ]*([;].*)?");
     std::regex		comm("[\t ]*([;].*)?");
 
     this->i++;
@@ -253,6 +254,14 @@ void	    AbstractVM::Print(void){
             throw PrintExcept(v.back()->toString(), std::to_string(this->i));
         std::cout   << static_cast<char>(std::stoi(v.back()->toString()));
     }
+}
+
+void	    AbstractVM::Delim(void){
+    if (v.empty())
+        throw EmptyStackExcept(std::to_string(this->i));
+    else
+        std::cout  << "__________________"
+                   << std::endl;
 }
 
 void	    AbstractVM::Sum(void){

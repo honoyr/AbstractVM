@@ -73,18 +73,20 @@ void	pars_stream(std::string &str, AbstractVM &vm, std::ifstream &ifstrm)
 {
     vm.setIterLine();
 	while(std::getline(ifstrm, str))
-	{
         valid_if_exception(vm, str);
-        try {
-            if (!vm.getExist_error())
-                management(vm, str);
-        }
-        catch (std::exception &e)
-        {
-            std::cout << e.what() << std::endl;
-        }
-
-    }
+	try {
+		if (!vm.getExist_error())
+		{
+			ifstrm.clear(), ifstrm.seekg(0, ifstrm.beg);
+			while (std::getline(ifstrm, str) && !vm.getEsc())
+				management(vm, str);
+		}
+	}
+	catch (std::exception &e)
+	{
+		std::cout << e.what() << std::endl;
+	}
+	ifstrm.close();
 }
 
 int     main(int ac, char** av)
