@@ -266,10 +266,10 @@ void	    AbstractVM::Dump(void){
 		for(int i = v.size() - 1 ; i >= 0; i--)
 		{
 			if (v[i]->getType() == Int8)
-				std::cout	<< static_cast<char>(std::stoi(v[i]->toString()))
+				std::cout	<< std::stoi(v[i]->toString())
 							 << std::endl;
 			if (v[i]->getType() == Int16)
-				std::cout << static_cast<short>(std::stoi(v[i]->toString()))
+				std::cout << std::stoi(v[i]->toString())
 						  << std::endl;
 			else if (v[i]->getType() == Int32)
 				std::cout << std::stoi(v[i]->toString())
@@ -337,11 +337,15 @@ void	    AbstractVM::Min(void){
     if (v.empty())
         throw EmptyStackExcept(std::to_string(this->i));
     else {
-        const IOperand *a = factory.createOperand(Int32, std::to_string(0));
+        const IOperand *a = factory.createOperand(v.back()->getType(), v.back()->toString());
 
         for (int i = 0; i < v.size(); i++) {
             if (*a > *(v[i]))
-                a = (v[i]);
+			{
+				a = (v[i]);
+				std::cout << a->toString()
+						  << std::endl;
+			}
         }
         std::cout << a->toString()
                   << std::endl;
