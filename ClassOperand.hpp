@@ -41,6 +41,25 @@ public:
     eOperandType		getType(void)       const { return (this->type); }
     std::string const & toString( void )    const { return str; }
 	int					getPrecision(void)  const { return (static_cast<int>(type)); }
+	void				getPrint(void)				{
+
+		if (type == Int8)
+			std::cout	<< std::stoi(str)
+						 << std::endl;
+		if (type == Int16)
+			std::cout << std::stoi(str)
+					  << std::endl;
+		else if (type == Int32)
+			std::cout << std::stoi(str)
+					  << std::endl;
+		else if (type == Float)
+			std::cout << std::stof(str)
+					  << std::endl;
+		else if (type == Double)
+			std::cout << std::stod(str)
+					  << std::endl;
+
+	}
 
     template <typename Z>
     IOperand const *    convert_diff_type(Z a, Z b, eOperandType type, char c) const

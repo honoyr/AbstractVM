@@ -265,21 +265,22 @@ void	    AbstractVM::Dump(void){
 
 		for(int i = v.size() - 1 ; i >= 0; i--)
 		{
-			if (v[i]->getType() == Int8)
-				std::cout	<< std::stoi(v[i]->toString())
-							 << std::endl;
-			if (v[i]->getType() == Int16)
-				std::cout << std::stoi(v[i]->toString())
-						  << std::endl;
-			else if (v[i]->getType() == Int32)
-				std::cout << std::stoi(v[i]->toString())
-						  << std::endl;
-			else if (v[i]->getType() == Float)
-				std::cout << std::stof(v[i]->toString())
-						  << std::endl;
-			else if (v[i]->getType() == Double)
-				std::cout << std::stod(v[i]->toString())
-						  << std::endl;
+//			if (v[i]->getType() == Int8)
+//				std::cout	<< std::stoi(v[i]->toString())
+//							 << std::endl;
+//			if (v[i]->getType() == Int16)
+//				std::cout << std::stoi(v[i]->toString())
+//						  << std::endl;
+//			else if (v[i]->getType() == Int32)
+//				std::cout << std::stoi(v[i]->toString())
+//						  << std::endl;
+//			else if (v[i]->getType() == Float)
+//				std::cout << std::stof(v[i]->toString())
+//						  << std::endl;
+//			else if (v[i]->getType() == Double)
+//				std::cout << std::stod(v[i]->toString())
+//						  << std::endl;
+			v.back().(get());
 		}
     }
 }
