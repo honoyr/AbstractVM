@@ -149,9 +149,10 @@ void	    AbstractVM::Push(std::string const & str, eOperandType type){
 void	    AbstractVM::Assert(std::string const & str, eOperandType type){
     const IOperand     *assert;
 
+	assert = factory.createOperand(type, str);
     if (v.empty())
         throw EmptyStackExcept(std::to_string(this->i));
-    if(!(assert == factory.createOperand(type, str)))
+    if(!(*v.back() == *assert))
         throw ErrorAssertExcept(std::to_string(this->i), v.back()->toString(), str);
 }
 
@@ -239,9 +240,47 @@ void	    AbstractVM::Dump(void){
         throw EmptyStackExcept(std::to_string(this->i));
     else
     {
-        for(const auto & x : v)
-            std::cout   << x->toString()
-                        << std::endl;
+//		std::cout.precision(2);
+//		std::cout.width(2);
+//        for(const auto & x : v)
+//		{
+//			if (x->getType() == Int8)
+//				std::cout	<< static_cast<char>(std::stoi(x->toString()))
+//							 << std::endl;
+//			if (x->getType() == Int16)
+//				std::cout << static_cast<short>(std::stoi(x->toString()))
+//						<< std::endl;
+//			else if (x->getType() == Int32)
+//				std::cout << std::stoi(x->toString())
+//						<< std::endl;
+//			else if (x->getType() == Float)
+//				std::cout << std::stof(x->toString())
+//						<< std::endl;
+//			else if (x->getType() == Double)
+//				std::cout << std::stod(x->toString())
+//						<< std::endl;
+//		}
+//            std::cout   << x->toString()
+//                        << std::endl;
+
+		for(int i = v.size() - 1 ; i >= 0; i--)
+		{
+			if (v[i]->getType() == Int8)
+				std::cout	<< static_cast<char>(std::stoi(v[i]->toString()))
+							 << std::endl;
+			if (v[i]->getType() == Int16)
+				std::cout << static_cast<short>(std::stoi(v[i]->toString()))
+						  << std::endl;
+			else if (v[i]->getType() == Int32)
+				std::cout << std::stoi(v[i]->toString())
+						  << std::endl;
+			else if (v[i]->getType() == Float)
+				std::cout << std::stof(v[i]->toString())
+						  << std::endl;
+			else if (v[i]->getType() == Double)
+				std::cout << std::stod(v[i]->toString())
+						  << std::endl;
+		}
     }
 }
 

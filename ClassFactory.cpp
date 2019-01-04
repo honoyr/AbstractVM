@@ -15,7 +15,7 @@
 #include "ClassOperand.hpp"
 #include <climits>
 
-
+//
 //Factory::Factory (){}
 //Factory::Factory(Factory const &rhs){ }
 //Factory::~Factory(){}

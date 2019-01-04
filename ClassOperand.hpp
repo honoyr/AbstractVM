@@ -82,6 +82,19 @@ public:
 //
 //        }
 //    }
+//
+//	Operand		&operator=(const IOperand & rhs ) {
+//
+//		this->str = (*rhs).toString();
+//		this->type = (*rhs).getType();
+//	}
+//
+//	Operand		&operator=(IOperand const & rhs ) {
+//
+//		this->str = std::to_string(this->value);
+//		this->type = (*rhs).getType();
+//		return (*this);
+//	}
 
     IOperand const * operator+( IOperand const & rhs ) const {
 
