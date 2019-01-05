@@ -280,7 +280,7 @@ void	    AbstractVM::Dump(void){
 //			else if (v[i]->getType() == Double)
 //				std::cout << std::stod(v[i]->toString())
 //						  << std::endl;
-			v.back().(get());
+			v[i]->getPrint();
 		}
     }
 }
@@ -311,8 +311,7 @@ void	    AbstractVM::Sum(void){
 
     for(int i = 0; i < v.size(); i++)
         a = *a + *(v[i]);
-    std::cout   << a->toString()
-                << std::endl;
+	a->getPrint();
     delete a;
 }
 
@@ -328,8 +327,7 @@ void	    AbstractVM::Max(void){
             if (*a < *(v[i]))
                 a = (v[i]);
         }
-        std::cout   << a->toString()
-                    << std::endl;
+		a->getPrint();
         delete a;
     }
 }
@@ -344,12 +342,9 @@ void	    AbstractVM::Min(void){
             if (*a > *(v[i]))
 			{
 				a = (v[i]);
-				std::cout << a->toString()
-						  << std::endl;
 			}
         }
-        std::cout << a->toString()
-                  << std::endl;
+        a->getPrint();
         delete a;
     }
 }
@@ -363,8 +358,7 @@ void	    AbstractVM::Avrg(void){
         for (int i = 0; i < v.size(); i++)
             a = *a + *(v[i]);
         a = *a / *factory.createOperand(a->getType(), std::to_string(v.size()));;
-        std::cout << a->toString()
-                  << std::endl;
+		a->getPrint();
         delete a;
     }
 }
