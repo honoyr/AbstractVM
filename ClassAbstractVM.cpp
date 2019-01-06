@@ -239,50 +239,8 @@ void	    AbstractVM::Dump(void){
     if (v.empty())
         throw EmptyStackExcept(std::to_string(this->i));
     else
-    {
-//		std::cout.precision(2);
-//		std::cout.width(2);
-//        for(const auto & x : v)
-//		{
-//			if (x->getType() == Int8)
-//				std::cout	<< static_cast<char>(std::stoi(x->toString()))
-//							 << std::endl;
-//			if (x->getType() == Int16)
-//				std::cout << static_cast<short>(std::stoi(x->toString()))
-//						<< std::endl;
-//			else if (x->getType() == Int32)
-//				std::cout << std::stoi(x->toString())
-//						<< std::endl;
-//			else if (x->getType() == Float)
-//				std::cout << std::stof(x->toString())
-//						<< std::endl;
-//			else if (x->getType() == Double)
-//				std::cout << std::stod(x->toString())
-//						<< std::endl;
-//		}
-//            std::cout   << x->toString()
-//                        << std::endl;
-
 		for(int i = v.size() - 1 ; i >= 0; i--)
-		{
-//			if (v[i]->getType() == Int8)
-//				std::cout	<< std::stoi(v[i]->toString())
-//							 << std::endl;
-//			if (v[i]->getType() == Int16)
-//				std::cout << std::stoi(v[i]->toString())
-//						  << std::endl;
-//			else if (v[i]->getType() == Int32)
-//				std::cout << std::stoi(v[i]->toString())
-//						  << std::endl;
-//			else if (v[i]->getType() == Float)
-//				std::cout << std::stof(v[i]->toString())
-//						  << std::endl;
-//			else if (v[i]->getType() == Double)
-//				std::cout << std::stod(v[i]->toString())
-//						  << std::endl;
 			v[i]->getPrint();
-		}
-    }
 }
 
 void	    AbstractVM::Print(void){
@@ -311,8 +269,9 @@ void	    AbstractVM::Sum(void){
 
     for(int i = 0; i < v.size(); i++)
         a = *a + *(v[i]);
+	std::cout << "SUMM ";
 	a->getPrint();
-    delete a;
+//    delete a;
 }
 
 void	    AbstractVM::Max(void){
@@ -320,32 +279,30 @@ void	    AbstractVM::Max(void){
         throw EmptyStackExcept(std::to_string(this->i));
     else
     {
-        const IOperand *a = factory.createOperand(Int32, std::to_string(0));
+        const IOperand *a = factory.createOperand(Int32, std::to_string(INT32_MIN));
 
         for(int i = 0; i < v.size(); i++)
-        {
-            if (*a < *(v[i]))
+            if (*(v[i]) > *a)
                 a = (v[i]);
-        }
+		std::cout << "MAX ";
 		a->getPrint();
-        delete a;
+//        delete a;
     }
 }
 
 void	    AbstractVM::Min(void){
     if (v.empty())
         throw EmptyStackExcept(std::to_string(this->i));
-    else {
-        const IOperand *a = factory.createOperand(v.back()->getType(), v.back()->toString());
+    else
+	{
+        const IOperand *a = factory.createOperand(Int32, std::to_string(INT32_MAX));
 
-        for (int i = 0; i < v.size(); i++) {
-            if (*a > *(v[i]))
-			{
+        for (int i = 0; i < v.size(); i++)
+            if (*(v[i]) < *a)
 				a = (v[i]);
-			}
-        }
+		std::cout << "MIN ";
         a->getPrint();
-        delete a;
+//        delete a;
     }
 }
 
@@ -357,9 +314,12 @@ void	    AbstractVM::Avrg(void){
 
         for (int i = 0; i < v.size(); i++)
             a = *a + *(v[i]);
-        a = *a / *factory.createOperand(a->getType(), std::to_string(v.size()));;
+
+//		const IOperand *b = ;
+        a = *a / *(factory.createOperand(a->getType(), std::to_string(v.size())));
+		std::cout << "AVRG ";
 		a->getPrint();
-        delete a;
+//        delete a;
     }
 }
 
@@ -367,20 +327,20 @@ void	    AbstractVM::Asort(void){
     if (v.empty())
         throw EmptyStackExcept(std::to_string(this->i));
     else {
-        const IOperand *tmp = factory.createOperand(Int32, std::to_string(0));
+        const IOperand *tmp;
 
         for (int i = 0; i < v.size(); i++)
             for (int j = 0; j < v.size(); j++)
             {
-                if (i != j && v[i] > v[j])
+                if (i != j && *(v[i]) > *(v[j]))
                 {
-                    tmp = v[j];
-                    v[j] = v[i];
-                    v[i] = tmp;
+                    tmp = v[i];
+                    v[i] = v[j];
+                    v[j] = tmp;
 
                 }
             }
-        delete tmp;
+//        delete tmp;
     }
 }
 
@@ -388,20 +348,20 @@ void	    AbstractVM::Dsort(void){
     if (v.empty())
         throw EmptyStackExcept(std::to_string(this->i));
     else {
-        const IOperand *tmp = factory.createOperand(Int32, std::to_string(0));
+        const IOperand *tmp;
 
         for (int i = 0; i < v.size(); i++)
             for (int j = 0; j < v.size(); j++)
             {
-                if (i != j && v[i] < v[j])
+                if (i != j && *(v[i]) < *(v[j]))
                 {
-                    tmp = v[j];
-                    v[j] = v[i];
-                    v[i] = tmp;
+                    tmp = v[i];
+                    v[i] = v[j];
+                    v[j] = tmp;
 
                 }
             }
-        delete tmp;
+//        delete tmp;
     }
 }
 

@@ -168,8 +168,17 @@ public:
         }
         if (convert_type(rhs.toString()) == 0)
             throw DivideByZeroExcept();
+//		std::cout << "Это число делим "
+//				  << convert_type(rhs.toString())
+//				  << std::endl
+//					<< " Ha "
+//				  << convert_type(this->toString())
+//				  << std::endl
+//				<<  convert_type(this->toString()) / convert_type(rhs.toString())
+//				<< " Равно  = "
+//				<< std::endl;
         return (factory.createOperand(this->type, std::to_string(
-                convert_type(rhs.toString()) / convert_type(this->toString()))));
+                 convert_type(this->toString()) / convert_type(rhs.toString()))));
     }
 
     IOperand const * operator%( IOperand const & rhs ) const {
@@ -212,76 +221,173 @@ public:
 
     bool            operator<( IOperand const & rhs ) const {
 
-        if (rhs.getType() == Int8)
-            return ((static_cast<char>(std::stoi(this->str)) <
-                     static_cast<char>(std::stoi(rhs.toString()))));
-        if (rhs.getType() == Int16)
-            return ((static_cast<short>(std::stoi(this->str)) <
-                     static_cast<short>(std::stoi(rhs.toString()))));
+		if (rhs.getType() == Int8)
+		{
+//			std::cout	<< str
+//						 << " < "
+//						 << rhs.toString()
+//						 << std::endl;
+//			if ((convert_type(this->str)) < (convert_compare(rhs)))
+//				std::cout << "YES" << std::endl;
+//			else
+//				std::cout << "NO" << std::endl;
+			return ((convert_type(this->str)) <
+					(convert_compare(rhs)));
+		}
+		if (rhs.getType() == Int16)
+		{
+//			std::cout	<< str
+//						 << " < "
+//						 << rhs.toString()
+//						 << std::endl;
+//			if ((convert_type(this->str)) < (convert_compare(rhs)))
+//				std::cout << "YES" << std::endl;
+//			else
+//				std::cout << "NO" << std::endl;
+			return ((convert_type(this->str)) <
+					(convert_compare(rhs)));
+		}
         else if (rhs.getType() == Int32)
-            return ((std::stoi(this->str)) < (std::stoi(rhs.toString())));
+		{
+//			std::cout	<< str
+//						 << " < "
+//						 << rhs.toString()
+//						 << std::endl;
+//			if ((convert_type(this->str)) < (convert_compare(rhs)))
+//				std::cout << "YES" << std::endl;
+//			else
+//				std::cout << "NO" << std::endl;
+			return ((convert_type(this->str) < (convert_compare(rhs))));
+		}
         else if (rhs.getType() == Float)
-            return ((std::stof(this->str) < (std::stof(rhs.toString()))));
-        else if (rhs.getType() == Double)
-            return ((std::stod(this->str) < (std::stod(rhs.toString()))));
-        else
-            return ((convert_type(rhs.toString()) < convert_type(this->toString())));
+		{
+//			std::cout	<< str
+//						 << " < "
+//						 << rhs.toString()
+//						 << std::endl;
+//			if ((convert_type(this->str)) < (convert_compare(rhs)))
+//				std::cout << "YES" << std::endl;
+//			else
+//				std::cout << "NO" << std::endl;
+			return ((convert_type(this->str) < (convert_compare(rhs))));
+		}
+		else if (rhs.getType() == Double)
+		{
+//			std::cout	<< str
+//						 << " < "
+//						 << rhs.toString()
+//						 << std::endl;
+//			if ((convert_type(this->str)) < (convert_compare(rhs)))
+//				std::cout << "YES" << std::endl;
+//			else
+//				std::cout << "NO" << std::endl;
+			return ((convert_type(this->str) < (convert_compare(rhs))));
+		}
     }
 
     bool            operator>( IOperand const & rhs ) const {
 
-        if (rhs.getType() == Int8)
-            return ((static_cast<char>(std::stoi(this->str)) >
-                     static_cast<char>(std::stoi(rhs.toString()))));
-        if (rhs.getType() == Int16)
-            return ((static_cast<short>(std::stoi(this->str)) >
-                     static_cast<short>(std::stoi(rhs.toString()))));
-        else if (rhs.getType() == Int32)
-            return ((std::stoi(this->str)) > (std::stoi(rhs.toString())));
-        else if (rhs.getType() == Float)
-            return ((std::stof(this->str) > (std::stof(rhs.toString()))));
-        else if (rhs.getType() == Double)
-            return ((std::stod(this->str) > (std::stod(rhs.toString()))));
-        else
-            return ((convert_type(rhs.toString()) > convert_type(this->toString())));
+		if (rhs.getType() == Int8)
+		{
+//			std::cout	<< str
+//						 << " > "
+//						 << rhs.toString()
+//						 << std::endl;
+//			if ((convert_type(this->str)) > (convert_compare(rhs)))
+//				std::cout << "YES" << std::endl;
+//			else
+//				std::cout << "NO" << std::endl;
+			return ((convert_type(this->str)) >
+					(convert_compare(rhs)));
+		}
+		if (rhs.getType() == Int16)
+		{
+//			std::cout	<< str
+//						 << " > "
+//						 << rhs.toString()
+//						 << std::endl;
+//			if ((convert_type(this->str)) > (convert_compare(rhs)))
+//				std::cout << "YES" << std::endl;
+//			else
+//				std::cout << "NO" << std::endl;
+			return ((convert_type(this->str)) >
+					(convert_compare(rhs)));
+		}
+		else if (rhs.getType() == Int32)
+		{
+//			std::cout	<< str
+//						 << " > "
+//						 << rhs.toString()
+//						 << std::endl;
+//			if ((convert_type(this->str)) > (convert_compare(rhs)))
+//				std::cout << "YES" << std::endl;
+//			else
+//				std::cout << "NO" << std::endl;
+			return ((convert_type(this->str) > (convert_compare(rhs))));
+		}
+		else if (rhs.getType() == Float)
+		{
+//			std::cout	<< str
+//						 << " > "
+//						 << rhs.toString()
+//						 << std::endl;
+//			if ((convert_type(this->str)) > (convert_compare(rhs)))
+//				std::cout << "YES" << std::endl;
+//			else
+//				std::cout << "NO" << std::endl;
+			return ((convert_type(this->str) > (convert_compare(rhs))));
+		}
+		else if (rhs.getType() == Double)
+		{
+//			std::cout	<< str
+//						 << " > "
+//						 << rhs.toString()
+//						 << std::endl;
+//			if ((convert_type(this->str)) > (convert_compare(rhs)))
+//				std::cout << "YES" << std::endl;
+//			else
+//				std::cout << "NO" << std::endl;
+			return ((convert_type(this->str) > (convert_compare(rhs))));
+		}
+
     }
 
 
     bool            operator==( IOperand const & rhs ) const {
 
-        if (rhs.getType() == Int8)
-            return ((static_cast<char>(std::stoi(this->str)) ==
-                     static_cast<char>(std::stoi(rhs.toString()))));
-        if (rhs.getType() == Int16)
-            return ((static_cast<short>(std::stoi(this->str)) ==
-                     static_cast<short>(std::stoi(rhs.toString()))));
+		if (rhs.getType() == Int8)
+			return (convert_type(this->str) ==
+					static_cast<char>(std::stoi(rhs.toString())));
+		if (rhs.getType() == Int16)
+			return ((convert_type(this->str)) ==
+					static_cast<short>(std::stoi(rhs.toString())));
         else if (rhs.getType() == Int32)
             return ((std::stoi(this->str)) == (std::stoi(rhs.toString())));
         else if (rhs.getType() == Float)
             return ((std::stof(this->str) == (std::stof(rhs.toString()))));
         else if (rhs.getType() == Double)
             return ((std::stod(this->str) == (std::stod(rhs.toString()))));
-        else
+		else if (rhs.getType() == Double)
             return ((convert_type(rhs.toString()) == convert_type(this->toString())));
     }
 
-    bool            operator!=( IOperand const & rhs ) const {
-
-        if (rhs.getType() == Int8)
-            return ((static_cast<char>(std::stoi(this->str)) !=
-                     static_cast<char>(std::stoi(rhs.toString()))));
-        if (rhs.getType() == Int16)
-            return ((static_cast<short>(std::stoi(this->str)) !=
-                     static_cast<short>(std::stoi(rhs.toString()))));
-        else if (rhs.getType() == Int32)
-            return ((std::stoi(this->str)) != (std::stoi(rhs.toString())));
-        else if (rhs.getType() == Float)
-            return ((std::stof(this->str) != (std::stof(rhs.toString()))));
-        else if (rhs.getType() == Double)
-            return ((std::stod(this->str) != (std::stod(rhs.toString()))));
-        else
-            return ((convert_type(rhs.toString()) != convert_type(this->toString())));
-    }
+//    bool            operator!=( IOperand const & rhs ) const {
+//
+//        if (rhs.getType() == Int8)
+//            return ((static_cast<char>(std::stoi(this->str)) !=
+//                     static_cast<char>(std::stoi(rhs.toString()))));
+//        if (rhs.getType() == Int16)
+//            return ((static_cast<short>(std::stoi(this->str)) !=
+//                     static_cast<short>(std::stoi(rhs.toString()))));
+//        else if (rhs.getType() == Int32)
+//            return ((std::stoi(this->str)) != (std::stoi(rhs.toString())));
+//        else if (rhs.getType() == Float)
+//            return ((std::stof(this->str) != (std::stof(rhs.toString()))));
+//        else if (rhs.getType() == Double)
+//            return ((std::stod(this->str) != (std::stod(rhs.toString()))));
+//        else
+//            return ((convert_type(rhs.toString()) != convert_type(this->toString())));
+//    }
 
     class DivideByZeroExcept : public std::exception{
     public:
@@ -293,6 +399,19 @@ public:
         }
     };
 
+	T				    convert_compare(IOperand const & rhs) const
+	{
+		if (rhs.getType() == Int8)
+			return ((static_cast<char>(std::stoi(rhs.toString()))));
+		else if (rhs.getType() == Int16)
+			return ((static_cast<short>(std::stoi(rhs.toString()))));
+		else if (rhs.getType() == Int32)
+			return ((std::stoi(rhs.toString())));
+		else if (rhs.getType() == Float)
+			return (std::stof(rhs.toString()));
+		else
+			return (std::stod(rhs.toString()));
+	}
 
 private:
     std::string     str;
@@ -311,23 +430,22 @@ private:
             return (Float);
         else if (typeid(double) == typeid(T))
             return (Double);
-        else
-            return (Double);
     }
 
     T				    convert_type(std::string str) const
-    {
-        if (type == Int8)
-            return ((static_cast<char>(std::stoi(str))));
-        else if (type == Int16)
-            return ((static_cast<short int>(std::stoi(str))));
-        else if (type == Int32)
-            return ((std::stoi(str)));
-        else if (type == Float)
-            return (std::stof(str));
-        else
-            return (std::stod(str));
-    }
+	{
+		if (type == Int8)
+			return ((static_cast<char>(std::stoi(str))));
+		else if (type == Int16)
+			return ((static_cast<short>(std::stoi(str))));
+		else if (type == Int32)
+			return ((std::stoi(str)));
+		else if (type == Float)
+			return (std::stof(str));
+		else if (type == Double)
+			return (std::stod(str));
+	}
+
 };
 
 #endif

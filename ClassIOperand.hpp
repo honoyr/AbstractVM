@@ -37,7 +37,7 @@ public:
     virtual IOperand const *    operator%( IOperand const & rhs ) const = 0; // Modulo
 //    virtual IOperand const *    operator=( IOperand const & rhs ) const = 0; // Modulo
     virtual bool                operator==( IOperand const & rhs ) const = 0; // Equal to
-    virtual bool                operator!=( IOperand const & rhs ) const = 0; // Not Equal to
+//    virtual bool                operator!=( IOperand const & rhs ) const = 0; // Not Equal to
     virtual bool                operator>( IOperand const & rhs ) const = 0; // Greater than
     virtual bool                operator<( IOperand const & rhs ) const = 0; // Less than
     virtual std::string const & toString( void ) const = 0; // String representation of the instance
