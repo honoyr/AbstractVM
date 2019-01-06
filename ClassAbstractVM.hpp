@@ -70,6 +70,8 @@ class AbstractVM {
 
 	class LexicalErrorExcept : public std::exception{
 		public:
+            LexicalErrorExcept();
+            ~LexicalErrorExcept() _NOEXCEPT;
             LexicalErrorExcept(std::string nline, std::string str)
                     : _nline(nline), _str(str) {}
 //           ~LexicalErrorExcept(){}
@@ -86,6 +88,8 @@ class AbstractVM {
 
 	class DoubExitExcept : public std::exception{
 		public:
+			DoubExitExcept();
+			~DoubExitExcept() _NOEXCEPT;
 			DoubExitExcept(std::string nline) : _nline(nline) {}
             const char *what() const throw()
 			{
@@ -99,6 +103,8 @@ class AbstractVM {
 
     class EmptyStackExcept : public std::exception{
     public:
+        EmptyStackExcept();
+        ~EmptyStackExcept() _NOEXCEPT;
         EmptyStackExcept(std::string nline) : _nline(nline) {}
         const char *what() const throw()
         {
@@ -112,6 +118,8 @@ class AbstractVM {
 
     class ErrorAssertExcept : public std::exception{
     public:
+        ErrorAssertExcept();
+        ~ErrorAssertExcept() _NOEXCEPT;
         ErrorAssertExcept(std::string nline, std::string assert_s, std::string stack_s)
                 : _nline(nline), _assert_s(assert_s), _stack_s(stack_s) {}
         const char *what() const throw()
@@ -128,6 +136,8 @@ class AbstractVM {
 
     class LessThanTwoArgExcept : public std::exception{
     public:
+        LessThanTwoArgExcept();
+        ~LessThanTwoArgExcept() _NOEXCEPT;
         LessThanTwoArgExcept(std::string nline) : _nline(nline) {}
         const char *what() const throw()
         {
@@ -141,6 +151,8 @@ class AbstractVM {
 
     class PrintExcept : public std::exception{
     public:
+        PrintExcept();
+        ~PrintExcept() _NOEXCEPT;
         PrintExcept(std::string nline, std::string str)
                 : _nline(nline), _str(str) {}
         const char *what() const throw()
@@ -156,6 +168,8 @@ class AbstractVM {
 
     class NoExistExitExcept : public std::exception{
     public:
+		NoExistExitExcept();
+		~NoExistExitExcept() _NOEXCEPT;
         const char *what() const throw()
         {
             std::string error_exept("Error: The command 'exit' no found");

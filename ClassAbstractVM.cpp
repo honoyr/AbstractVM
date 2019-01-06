@@ -28,7 +28,7 @@ AbstractVM&		AbstractVM::operator=(AbstractVM const &vm){
 
 AbstractVM::~AbstractVM(void){}
 
-eOperandType        AbstractVM::getType(std::string const &type) {
+eOperandType        AbstractVM::getType(std::string const &str_type) {
     std::map<std::string, eOperandType > types = {
             {"int8", Int8},
             {"int16", Int16},
@@ -36,7 +36,7 @@ eOperandType        AbstractVM::getType(std::string const &type) {
             {"float", Float},
             {"double", Double}
     };
-    return (types[type]);
+    return (types[str_type]);
 }
 
 bool 		AbstractVM::getExist_error(void){
