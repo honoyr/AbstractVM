@@ -20,9 +20,9 @@ AbstractVM::AbstractVM(AbstractVM const &copy){
 		*this = copy;
 }
 AbstractVM&		AbstractVM::operator=(AbstractVM const &vm){
-    exist_error = getExist_error();
-    exist_exit  = getExist_exit();
-    esc = getEsc();
+    exist_error = vm.getExist_error();
+    exist_exit  = vm.getExist_exit();
+    esc = vm.getEsc();
 	return *this;
 }
 
@@ -36,20 +36,21 @@ eOperandType        AbstractVM::getType(std::string const &str_type) {
             {"float", Float},
             {"double", Double}
     };
+    std::cout << "TYPE = "<< types[str_type] << std::endl; // DEL
     return (types[str_type]);
 }
 
-bool 		AbstractVM::getExist_error(void){
+bool 		AbstractVM::getExist_error(void)    const {
     if (!this->exist_exit)
         throw NoExistExitExcept();
     return this->exist_error;
 }
 
-bool 		AbstractVM::getExist_exit(void)     {return this->exist_exit;}
-bool 		AbstractVM::getEsc(void)            {return this->esc;}
+bool 		AbstractVM::getExist_exit(void)     const       {return this->exist_exit;}
+bool 		AbstractVM::getEsc(void)            const       {return this->esc;}
+void        AbstractVM::setExit()                           {this->esc = true;}
 
 void        AbstractVM::setIterLine()           {this->i = 0;}
-void        AbstractVM::setExit()               {this->esc = true;}
 
 void 		AbstractVM::valid_data(std::string const &str){
 	std::regex 		arg("[ \t]*((push)|(assert))[ \t]+?((int8)|(int16)|(int32)|(float)|(double))[ \t]*?\\(([-]?[0-9]*.[0-9]*)\\)[ \t]*([;].*)?");
@@ -210,10 +211,12 @@ void	    AbstractVM::Mul(void){
 void	    AbstractVM::Div(void){
     if (v.size() < 2)
         throw LessThanTwoArgExcept(std::to_string(this->i));
-    const IOperand *a = v.back();
     v.pop_back();
     const IOperand *b = v.back();
     v.pop_back();
+    const IOperand *a = v.back();
+    if (a == 0 || b == 0)
+        throw ZeroExcept();
     const IOperand *c = *a / *b;
     Push(c->toString(), c->getType());
     delete a;
@@ -267,7 +270,7 @@ void	    AbstractVM::Sum(void){
         throw LessThanTwoArgExcept(std::to_string(this->i));
     const IOperand *a = factory.createOperand(Int32, std::to_string(0));
 
-    for(int i = 0; i < v.size(); i++)
+    for(unsigned long i = 0; i < v.size(); i++)
         a = *a + *(v[i]);
 	std::cout << "SUMM ";
 	a->getPrint();
@@ -281,7 +284,7 @@ void	    AbstractVM::Max(void){
     {
         const IOperand *a = factory.createOperand(Int32, std::to_string(INT32_MIN));
 
-        for(int i = 0; i < v.size(); i++)
+        for(unsigned long i = 0; i < v.size(); i++)
             if (*(v[i]) > *a)
                 a = (v[i]);
 		std::cout << "MAX ";
@@ -297,7 +300,7 @@ void	    AbstractVM::Min(void){
 	{
         const IOperand *a = factory.createOperand(Int32, std::to_string(INT32_MAX));
 
-        for (int i = 0; i < v.size(); i++)
+        for (unsigned long i = 0; i < v.size(); i++)
             if (*(v[i]) < *a)
 				a = (v[i]);
 		std::cout << "MIN ";
@@ -312,7 +315,7 @@ void	    AbstractVM::Avrg(void){
     else {
         const IOperand *a = factory.createOperand(Int32, std::to_string(0));
 
-        for (int i = 0; i < v.size(); i++)
+        for (unsigned long i = 0; i < v.size(); i++)
             a = *a + *(v[i]);
 
 //		const IOperand *b = ;
@@ -329,8 +332,8 @@ void	    AbstractVM::Asort(void){
     else {
         const IOperand *tmp;
 
-        for (int i = 0; i < v.size(); i++)
-            for (int j = 0; j < v.size(); j++)
+        for (unsigned long i = 0; i < v.size(); i++)
+            for (unsigned long j = 0; j < v.size(); j++)
             {
                 if (i != j && *(v[i]) > *(v[j]))
                 {
@@ -350,8 +353,8 @@ void	    AbstractVM::Dsort(void){
     else {
         const IOperand *tmp;
 
-        for (int i = 0; i < v.size(); i++)
-            for (int j = 0; j < v.size(); j++)
+        for (unsigned long i = 0; i < v.size(); i++)
+            for (unsigned long j = 0; j < v.size(); j++)
             {
                 if (i != j && *(v[i]) < *(v[j]))
                 {
