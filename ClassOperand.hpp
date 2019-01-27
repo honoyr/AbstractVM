@@ -78,6 +78,8 @@ public:
                 return (factory.createOperand(type, std::to_string((static_cast<int>(a)
                                                                     % static_cast<int>(b)))));
         }
+		else
+			throw UndefinedBehaviorExcept();
     }
 
 //    template <typename X>
@@ -222,133 +224,31 @@ public:
     bool            operator<( IOperand const & rhs ) const {
 
 		if (rhs.getType() == Int8)
-		{
-//			std::cout	<< str
-//						 << " < "
-//						 << rhs.toString()
-//						 << std::endl;
-//			if ((convert_type(this->str)) < (convert_compare(rhs)))
-//				std::cout << "YES" << std::endl;
-//			else
-//				std::cout << "NO" << std::endl;
 			return ((convert_type(this->str)) <
 					(convert_compare(rhs)));
-		}
 		if (rhs.getType() == Int16)
-		{
-//			std::cout	<< str
-//						 << " < "
-//						 << rhs.toString()
-//						 << std::endl;
-//			if ((convert_type(this->str)) < (convert_compare(rhs)))
-//				std::cout << "YES" << std::endl;
-//			else
-//				std::cout << "NO" << std::endl;
 			return ((convert_type(this->str)) <
 					(convert_compare(rhs)));
-		}
         else if (rhs.getType() == Int32)
-		{
-//			std::cout	<< str
-//						 << " < "
-//						 << rhs.toString()
-//						 << std::endl;
-//			if ((convert_type(this->str)) < (convert_compare(rhs)))
-//				std::cout << "YES" << std::endl;
-//			else
-//				std::cout << "NO" << std::endl;
 			return ((convert_type(this->str) < (convert_compare(rhs))));
-		}
         else if (rhs.getType() == Float)
-		{
-//			std::cout	<< str
-//						 << " < "
-//						 << rhs.toString()
-//						 << std::endl;
-//			if ((convert_type(this->str)) < (convert_compare(rhs)))
-//				std::cout << "YES" << std::endl;
-//			else
-//				std::cout << "NO" << std::endl;
 			return ((convert_type(this->str) < (convert_compare(rhs))));
-		}
-		else if (rhs.getType() == Double)
-		{
-//			std::cout	<< str
-//						 << " < "
-//						 << rhs.toString()
-//						 << std::endl;
-//			if ((convert_type(this->str)) < (convert_compare(rhs)))
-//				std::cout << "YES" << std::endl;
-//			else
-//				std::cout << "NO" << std::endl;
+		else
 			return ((convert_type(this->str) < (convert_compare(rhs))));
-		}
     }
 
     bool            operator>( IOperand const & rhs ) const {
 
 		if (rhs.getType() == Int8)
-		{
-//			std::cout	<< str
-//						 << " > "
-//						 << rhs.toString()
-//						 << std::endl;
-//			if ((convert_type(this->str)) > (convert_compare(rhs)))
-//				std::cout << "YES" << std::endl;
-//			else
-//				std::cout << "NO" << std::endl;
-			return ((convert_type(this->str)) >
-					(convert_compare(rhs)));
-		}
+			return ((convert_type(this->str)) > (convert_compare(rhs)));
 		if (rhs.getType() == Int16)
-		{
-//			std::cout	<< str
-//						 << " > "
-//						 << rhs.toString()
-//						 << std::endl;
-//			if ((convert_type(this->str)) > (convert_compare(rhs)))
-//				std::cout << "YES" << std::endl;
-//			else
-//				std::cout << "NO" << std::endl;
-			return ((convert_type(this->str)) >
-					(convert_compare(rhs)));
-		}
+			return ((convert_type(this->str)) > (convert_compare(rhs)));
 		else if (rhs.getType() == Int32)
-		{
-//			std::cout	<< str
-//						 << " > "
-//						 << rhs.toString()
-//						 << std::endl;
-//			if ((convert_type(this->str)) > (convert_compare(rhs)))
-//				std::cout << "YES" << std::endl;
-//			else
-//				std::cout << "NO" << std::endl;
 			return ((convert_type(this->str) > (convert_compare(rhs))));
-		}
 		else if (rhs.getType() == Float)
-		{
-//			std::cout	<< str
-//						 << " > "
-//						 << rhs.toString()
-//						 << std::endl;
-//			if ((convert_type(this->str)) > (convert_compare(rhs)))
-//				std::cout << "YES" << std::endl;
-//			else
-//				std::cout << "NO" << std::endl;
 			return ((convert_type(this->str) > (convert_compare(rhs))));
-		}
-		else if (rhs.getType() == Double)
-		{
-//			std::cout	<< str
-//						 << " > "
-//						 << rhs.toString()
-//						 << std::endl;
-//			if ((convert_type(this->str)) > (convert_compare(rhs)))
-//				std::cout << "YES" << std::endl;
-//			else
-//				std::cout << "NO" << std::endl;
+		else
 			return ((convert_type(this->str) > (convert_compare(rhs))));
-		}
 
     }
 
@@ -367,7 +267,7 @@ public:
             return ((std::stof(this->str) == (std::stof(rhs.toString()))));
         else if (rhs.getType() == Double)
             return ((std::stod(this->str) == (std::stod(rhs.toString()))));
-		else if (rhs.getType() == Double)
+		else
             return ((convert_type(rhs.toString()) == convert_type(this->toString())));
     }
 
@@ -399,6 +299,16 @@ public:
         }
     };
 
+	class UndefinedBehaviorExcept : public std::exception{
+	public:
+		UndefinedBehaviorExcept(void){}
+		const char *what() const throw()
+		{
+			return ("Error: Undefined Behavior - some condition is violated ");
+		}
+	};
+
+
 	T				    convert_compare(IOperand const & rhs) const
 	{
 		if (rhs.getType() == Int8)
@@ -428,7 +338,7 @@ private:
             return (Int32);
         else if (typeid(float) == typeid(T))
             return (Float);
-        else if (typeid(double) == typeid(T))
+        else
             return (Double);
     }
 
@@ -442,7 +352,7 @@ private:
 			return ((std::stoi(str)));
 		else if (type == Float)
 			return (std::stof(str));
-		else if (type == Double)
+		else
 			return (std::stod(str));
 	}
 
