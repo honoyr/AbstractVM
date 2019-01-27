@@ -95,7 +95,7 @@ class AbstractVM {
                 DoubExitExcept(std::string nline) : _nline(nline) {}
                 const char *what() const throw()
                 {
-                    std::string error_exept("Error: Double exit - line ");
+                    std::string error_exept("Error: Double exit -> line ");
                     error_exept = (error_exept + _nline);
                     return (error_exept.c_str());
                 }

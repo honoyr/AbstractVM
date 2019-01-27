@@ -157,6 +157,9 @@ public:
 
     IOperand const * operator/( IOperand const & rhs ) const {
 
+		if (convert_compare(rhs) == 0 || convert_type(this->toString()) == 0)
+			throw DivideByZeroExcept();
+
         if (rhs.getPrecision() > this->getPrecision())
         {
             if (rhs.getType() == Int16)
@@ -168,8 +171,7 @@ public:
             else if (rhs.getType() == Double)
                 return (convert_diff_type(std::stod(this->str), std::stod(rhs.toString()), rhs.getType(), '/'));
         }
-        if (convert_type(rhs.toString()) == 0)
-            throw DivideByZeroExcept();
+
 //		std::cout << "Это число делим "
 //				  << convert_type(rhs.toString())
 //				  << std::endl
@@ -185,6 +187,9 @@ public:
 
     IOperand const * operator%( IOperand const & rhs ) const {
 
+		if (convert_compare(rhs) == 0 || convert_type(this->toString()) == 0)
+			throw DivideByZeroExcept();
+
         if (rhs.getPrecision() > this->getPrecision())
         {
             if (rhs.getType() == Int16)
@@ -198,8 +203,6 @@ public:
                 return (convert_diff_type((std::stod(this->str)), (std::stod(rhs.toString())), rhs.getType(), '%'));
 
         }
-        if (convert_type(rhs.toString()) == 0)
-            throw DivideByZeroExcept();
         return (factory.createOperand(this->type, std::to_string(fmod(convert_type(rhs.toString()),
                                                                       convert_type(this->toString())))));
     }

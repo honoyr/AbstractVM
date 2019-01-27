@@ -36,7 +36,7 @@ eOperandType        AbstractVM::getType(std::string const &str_type) {
             {"float", Float},
             {"double", Double}
     };
-    std::cout << "TYPE = "<< types[str_type] << std::endl; // DEL
+//    std::cout << "TYPE = "<< types[str_type] << std::endl; // DEL
     return (types[str_type]);
 }
 
@@ -211,12 +211,12 @@ void	    AbstractVM::Mul(void){
 void	    AbstractVM::Div(void){
     if (v.size() < 2)
         throw LessThanTwoArgExcept(std::to_string(this->i));
-    v.pop_back();
     const IOperand *b = v.back();
     v.pop_back();
     const IOperand *a = v.back();
-    if (a == 0 || b == 0)
-        throw ZeroExcept();
+	v.pop_back();
+//    if (a == 0 || b == 0)
+//        throw ZeroExcept();
     const IOperand *c = *a / *b;
     Push(c->toString(), c->getType());
     delete a;
