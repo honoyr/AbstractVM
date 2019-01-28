@@ -38,6 +38,7 @@ class AbstractVM {
 
         eOperandType    getType(std::string const &type);
 		bool 		    getExist_error(void)    const;
+		bool 		    getAnyError(void)    const;
 		bool 		    getExist_exit(void)     const;
 		bool 		    getEsc(void)            const;
 

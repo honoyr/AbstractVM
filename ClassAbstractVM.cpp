@@ -46,6 +46,10 @@ bool 		AbstractVM::getExist_error(void)    const {
     return this->exist_error;
 }
 
+bool 		AbstractVM::getAnyError(void)    const {
+	return this->exist_error;
+}
+
 bool 		AbstractVM::getExist_exit(void)     const       {return this->exist_exit;}
 bool 		AbstractVM::getEsc(void)            const       {return this->esc;}
 void        AbstractVM::setExit()                           {this->esc = true;}
@@ -58,6 +62,7 @@ void 		AbstractVM::valid_data(std::string const &str){
 	std::regex		comm("[\t ]*([;].*)?");
 
 	this->i++;
+
     if (!regex_match(str, arg) && !regex_match(str, fun) && !regex_match(str, comm)){
         exist_error = true;
         throw LexicalErrorExcept(std::to_string(this->i), str);
@@ -70,6 +75,7 @@ void 		AbstractVM::valid_data(std::string const &str){
         }
         exist_exit = true;
     }
+//	if (this->v)
 }
 
 void 		AbstractVM::data_management(std::string const &str){
