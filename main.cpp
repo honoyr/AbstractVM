@@ -57,8 +57,8 @@ void	pars_stdin(std::string str, AbstractVM & vm)
         valid_if_exception(vm, str);
 //        if (!vm.getAnyError())
 			v_str.push_back(str);
-		if (vm.getExist_exit())
-			break ;
+//		if (vm.getExist_exit())
+//			break ;
 //        try {
 //            if (!vm.getExist_error())
 //                management(vm, str);
@@ -72,18 +72,14 @@ void	pars_stdin(std::string str, AbstractVM & vm)
 	i = -1;
 //	while ()
 	vm.setIterLine();
-	while (++i < v_str.size() && !vm.getEsc())
-	{
-//		while()
-//		valid_if_exception(vm, v_str.back());
 		try {
-//			if (!vm.getExist_error())
-				management(vm, v_str[i]);
+			if (!vm.getExist_error())
+				while (++i < v_str.size() && !vm.getEsc())
+					management(vm, v_str[i]);
 		}
 		catch (std::exception &e){
 			std::cout   << e.what() << std::endl;
 		}
-	}
 }
 
 
