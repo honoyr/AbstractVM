@@ -190,7 +190,7 @@ class AbstractVM {
     private:
         Factory							factory;
         std::vector<const IOperand *>	v;
-        int 							i;
+        unsigned long 					i;
         bool 							exist_error;
         bool 							exist_exit;
         bool							esc;
