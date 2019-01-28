@@ -37,7 +37,6 @@ public:
 	}
     ~Operand(void){}
 
-
     eOperandType		getType(void)       const { return (this->type); }
     std::string const & toString( void )    const { return str; }
 	int					getPrecision(void)  const { return (static_cast<int>(type)); }
@@ -82,49 +81,7 @@ public:
 			throw UndefinedBehaviorExcept();
     }
 
-//    template <typename X>
-//    bool    compare(X &a, X &b, eOperandType type, char c) const
-//    {
-//
-//        if (c == '<')
-//            return (factory.createOperand(type, std::to_string(a - b)));
-//        else if (c == '>')
-//            return (factory.createOperand(type, std::to_string(a / b)));
-//        else if (c == '==')
-//        {
-//            if (typeid(Z) == typeid(float) || typeid(Z) == typeid(double))
-//                return (factory.createOperand(type, std::to_string(fmod(a, b)));
-//            else
-//                return (factory.createOperand(type, std::to_string((static_cast<int>(a)
-//                                                                    % static_cast<int>(b)))));
-//        }
-//        else
-//        {
-//
-//        }
-//    }
-//
-//	Operand		&operator=(const IOperand & rhs ) {
-//
-//		this->str = (*rhs).toString();
-//		this->type = (*rhs).getType();
-//	}
-//
-//	Operand		&operator=(IOperand const & rhs ) {
-//
-//		this->str = std::to_string(this->value);
-//		this->type = (*rhs).getType();
-//		return (*this);
-//	}
-
     IOperand const * operator+( IOperand const & rhs ) const {
-
-//        std::cout   <<  rhs.getPrecision() // DELETE
-//                    << std::endl
-//                    << this->getPrecision()
-//                    << std::endl;
-
-
         if (rhs.getPrecision() > this->getPrecision())
              return (rhs + *this);
         return (factory.createOperand(this->type, std::to_string(
@@ -171,16 +128,6 @@ public:
             else if (rhs.getType() == Double)
                 return (convert_diff_type(std::stod(this->str), std::stod(rhs.toString()), rhs.getType(), '/'));
         }
-
-//		std::cout << "Это число делим "
-//				  << convert_type(rhs.toString())
-//				  << std::endl
-//					<< " Ha "
-//				  << convert_type(this->toString())
-//				  << std::endl
-//				<<  convert_type(this->toString()) / convert_type(rhs.toString())
-//				<< " Равно  = "
-//				<< std::endl;
         return (factory.createOperand(this->type, std::to_string(
                  convert_type(this->toString()) / convert_type(rhs.toString()))));
     }
@@ -206,23 +153,6 @@ public:
         return (factory.createOperand(this->type, std::to_string(fmod(convert_type(rhs.toString()),
                                                                       convert_type(this->toString())))));
     }
-
-
-//    bool            operator<( IOperand const & rhs ) const {
-//        if (rhs.getPrecision() > this->getPrecision())
-//        {
-//            if (rhs.getType() == Int16)
-//                return (compare(static_cast<short>(std::stoi(this->str)),
-//                                          static_cast<short>(std::stoi(rhs.toString()), '<');
-//            else if (rhs.getType() == Int32)
-//                return (compare((std::stoi(this->str)), (std::stoi(rhs.toString()), '<');
-//            else if (rhs.getType() == Float)
-//                return (compare(std::stof(this->str), (std::stof(rhs.toString()), '<');
-//            else if (rhs.getType() == Double)
-//                return (compare(std::stod(this->str), (std::stod(rhs.toString()), '<');
-//        }
-//        return (compare(convert_type(rhs.toString()), convert_type(this->toString())));
-//    }
 
     bool            operator<( IOperand const & rhs ) const {
 
@@ -274,24 +204,6 @@ public:
             return ((convert_type(rhs.toString()) == convert_type(this->toString())));
     }
 
-//    bool            operator!=( IOperand const & rhs ) const {
-//
-//        if (rhs.getType() == Int8)
-//            return ((static_cast<char>(std::stoi(this->str)) !=
-//                     static_cast<char>(std::stoi(rhs.toString()))));
-//        if (rhs.getType() == Int16)
-//            return ((static_cast<short>(std::stoi(this->str)) !=
-//                     static_cast<short>(std::stoi(rhs.toString()))));
-//        else if (rhs.getType() == Int32)
-//            return ((std::stoi(this->str)) != (std::stoi(rhs.toString())));
-//        else if (rhs.getType() == Float)
-//            return ((std::stof(this->str) != (std::stof(rhs.toString()))));
-//        else if (rhs.getType() == Double)
-//            return ((std::stod(this->str) != (std::stod(rhs.toString()))));
-//        else
-//            return ((convert_type(rhs.toString()) != convert_type(this->toString())));
-//    }
-
     class DivideByZeroExcept : public std::exception{
     public:
         DivideByZeroExcept(void){}
@@ -310,7 +222,6 @@ public:
 			return ("Error: Undefined Behavior - some condition is violated ");
 		}
 	};
-
 
 	T				    convert_compare(IOperand const & rhs) const
 	{

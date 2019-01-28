@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #include "ClassAbstractVM.hpp"
-#include <map>
-#include <regex>
+//#include <map>
+//#include <regex>
 
 AbstractVM::AbstractVM(void): i(0), exist_error(false), exist_exit(false), esc(false) {}
 AbstractVM::AbstractVM(AbstractVM const &copy){
@@ -36,7 +36,6 @@ eOperandType        AbstractVM::getType(std::string const &str_type) {
             {"float", Float},
             {"double", Double}
     };
-//    std::cout << "TYPE = "<< types[str_type] << std::endl; // DEL
     return (types[str_type]);
 }
 
@@ -44,10 +43,6 @@ bool 		AbstractVM::getExist_error(void)    const {
     if (!this->exist_exit)
         throw NoExistExitExcept();
     return this->exist_error;
-}
-
-bool 		AbstractVM::getAnyError(void)    const {
-	return this->exist_error;
 }
 
 bool 		AbstractVM::getExist_exit(void)     const       {return this->exist_exit;}
@@ -62,7 +57,6 @@ void 		AbstractVM::valid_data(std::string const &str){
 	std::regex		comm("[\t ]*([;].*)?");
 
 	this->i++;
-
     if (!regex_match(str, arg) && !regex_match(str, fun) && !regex_match(str, comm)){
         exist_error = true;
         throw LexicalErrorExcept(std::to_string(this->i), str);
@@ -75,7 +69,6 @@ void 		AbstractVM::valid_data(std::string const &str){
         }
         exist_exit = true;
     }
-//	if (this->v)
 }
 
 void 		AbstractVM::data_management(std::string const &str){
@@ -112,29 +105,6 @@ void 		AbstractVM::data_management(std::string const &str){
     this->i++;
     if (regex_match(str, arg))
     {
-//        std::cout   << result.operator[](2)
-//                    << std::endl
-//                    << "first"
-//                    << result.str()
-//                    << result.position()
-//                    << std::endl
-//                    << result.str(4)
-//                    << std::endl
-//                    << result.str(0)
-//                    << std::endl
-//                    << result.str(2)
-//                    << std::endl
-//                    << result.str(3)
-//                    << std::endl
-//                    << result.str(5)
-//                    << std::endl
-//                    << result.str(6)
-//                    << std::endl
-//                    << result.str(7)
-//                    << std::endl
-//                    << result.str(8)
-//                    << std::endl;
-
         std::regex_search(str.begin(), str.end(), result, arg);
         (this->*arg_exe[result.str(1)])(result.str(10), getType(result.str(4)));
     }
@@ -221,8 +191,6 @@ void	    AbstractVM::Div(void){
     v.pop_back();
     const IOperand *a = v.back();
 	v.pop_back();
-//    if (a == 0 || b == 0)
-//        throw ZeroExcept();
     const IOperand *c = *a / *b;
     Push(c->toString(), c->getType());
     delete a;
@@ -275,12 +243,10 @@ void	    AbstractVM::Sum(void){
     if (v.size() < 2)
         throw LessThanTwoArgExcept(std::to_string(this->i));
     const IOperand *a = factory.createOperand(Int32, std::to_string(0));
-
     for(unsigned long i = 0; i < v.size(); i++)
         a = *a + *(v[i]);
 	std::cout << "SUMM ";
 	a->getPrint();
-//    delete a;
 }
 
 void	    AbstractVM::Max(void){
@@ -289,13 +255,11 @@ void	    AbstractVM::Max(void){
     else
     {
         const IOperand *a = factory.createOperand(Int32, std::to_string(INT32_MIN));
-
         for(unsigned long i = 0; i < v.size(); i++)
             if (*(v[i]) > *a)
                 a = (v[i]);
 		std::cout << "MAX ";
 		a->getPrint();
-//        delete a;
     }
 }
 
@@ -305,13 +269,11 @@ void	    AbstractVM::Min(void){
     else
 	{
         const IOperand *a = factory.createOperand(Int32, std::to_string(INT32_MAX));
-
         for (unsigned long i = 0; i < v.size(); i++)
             if (*(v[i]) < *a)
 				a = (v[i]);
 		std::cout << "MIN ";
         a->getPrint();
-//        delete a;
     }
 }
 
@@ -320,15 +282,11 @@ void	    AbstractVM::Avrg(void){
         throw EmptyStackExcept(std::to_string(this->i));
     else {
         const IOperand *a = factory.createOperand(Int32, std::to_string(0));
-
         for (unsigned long i = 0; i < v.size(); i++)
             a = *a + *(v[i]);
-
-//		const IOperand *b = ;
         a = *a / *(factory.createOperand(a->getType(), std::to_string(v.size())));
 		std::cout << "AVRG ";
 		a->getPrint();
-//        delete a;
     }
 }
 
@@ -346,10 +304,8 @@ void	    AbstractVM::Asort(void){
                     tmp = v[i];
                     v[i] = v[j];
                     v[j] = tmp;
-
                 }
             }
-//        delete tmp;
     }
 }
 
@@ -367,12 +323,7 @@ void	    AbstractVM::Dsort(void){
                     tmp = v[i];
                     v[i] = v[j];
                     v[j] = tmp;
-
                 }
             }
-//        delete tmp;
     }
 }
-
-//EXEPTION______________________________________________________________________________
-//

@@ -11,12 +11,10 @@
 /* ************************************************************************** */
 
 #include "ClassAbstractVM.hpp"
-#include "ClassFactory.hpp"
-#include "ClassIOperand.hpp"
+//#include "ClassFactory.hpp"
+//#include "ClassIOperand.hpp"
 #include "ClassOperand.hpp"
 #include <fstream>
-
-
 
 void	valid_if_exception(AbstractVM &vm, std::string str)
 {
@@ -42,95 +40,29 @@ void    management(AbstractVM &vm, std::string str)
 void	pars_stdin(std::string str, AbstractVM & vm)
 {
 	std::vector <std::string> v_str;
-	unsigned long 		i;
 
-    i = 1;
     vm.setIterLine();
     while(1)
 	{
-//        std::cout << i++ << ". ";
 		std::getline(std::cin, str);
 		(!std::cin) ? exit(0) : (void)NULL;
         if (str == ";;") {
             break;
         }
-
-//        if (!vm.getAnyError())
 			v_str.push_back(str);
-//		if (vm.getExist_exit())
-//			break ;
-//        try {
-//            if (!vm.getExist_error())
-//                management(vm, str);
-//        }
-//        catch (std::exception &e){
-//            std::cout   << e.what() << std::endl;
-//        }
-
-//		v_str.push_back(str);
 	}
-	i = -1;
-	while (++i < v_str.size())
+	for(unsigned long i = 0; i < v_str.size(); i++)
 		valid_if_exception(vm, v_str[i]);
-	i = -1;
 	vm.setIterLine();
 		try {
 			if (!vm.getExist_error())
-				while (++i < v_str.size() && !vm.getEsc())
+				for(unsigned long i = 0; i < v_str.size(); (i++ && !vm.getEsc()))
 					management(vm, v_str[i]);
 		}
 		catch (std::exception &e){
 			std::cout   << e.what() << std::endl;
 		}
 }
-
-
-//void	pars_stdin(std::string str, AbstractVM & vm)
-//{
-//	std::vector <std::string> v_str;
-//	unsigned long 		i;
-//
-//	i = 1;
-//	vm.setIterLine();
-//	while(1)
-//	{
-////        std::cout << i++ << ". ";
-//		std::getline(std::cin, str);
-//		(!std::cin) ? exit(0) : (void)NULL;
-//		if (str == ";;") {
-//			break;
-//		}
-////		valid_if_exception(vm, str);
-////        if (!vm.getExist_error())
-//		v_str.push_back(str);
-////		if (vm.getExist_exit())
-////			break ;
-////        try {
-////            if (!vm.getExist_error())
-////                management(vm, str);
-////        }
-////        catch (std::exception &e){
-////            std::cout   << e.what() << std::endl;
-////        }
-//
-////		v_str.push_back(str);
-//	}
-//	i = -1;
-////	while ()
-//	while (++i < v_str.size() && !vm.getEsc())
-//	{
-////		while()
-////		valid_if_exception(vm, v_str.back());
-//		try {
-//			if (!vm.getExist_error())
-//				management(vm, v_str.back());
-//		}
-//		catch (std::exception &e){
-//			std::cout   << e.what() << std::endl;
-//		}
-//	}
-//}
-
 
 void	pars_stream(std::string &str, AbstractVM &vm, std::ifstream &ifstrm)
 {
