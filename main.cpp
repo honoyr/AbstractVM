@@ -54,7 +54,7 @@ void	pars_stdin(std::string str, AbstractVM & vm)
         if (str == ";;") {
             break;
         }
-        valid_if_exception(vm, str);
+
 //        if (!vm.getAnyError())
 			v_str.push_back(str);
 //		if (vm.getExist_exit())
@@ -70,7 +70,9 @@ void	pars_stdin(std::string str, AbstractVM & vm)
 //		v_str.push_back(str);
 	}
 	i = -1;
-//	while ()
+	while (++i < v_str.size())
+		valid_if_exception(vm, v_str[i]);
+	i = -1;
 	vm.setIterLine();
 		try {
 			if (!vm.getExist_error())
