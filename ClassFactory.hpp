@@ -20,12 +20,6 @@
 class Factory{
 
 public:
-//	Factory (void);
-//	Factory(Factory const &);
-//	~Factory(void);
-//
-//	Factory &operator=(Factory const &rhs);
-
     IOperand const * createOperand( eOperandType type, std::string const & value ) const;
 
 private:

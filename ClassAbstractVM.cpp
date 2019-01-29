@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #include "ClassAbstractVM.hpp"
-#include <map>
-#include <regex>
+//#include <map>
+//#include <regex>
 
 AbstractVM::AbstractVM(void): i(0), exist_error(false), exist_exit(false), esc(false) {}
 AbstractVM::AbstractVM(AbstractVM const &copy){
@@ -20,9 +20,9 @@ AbstractVM::AbstractVM(AbstractVM const &copy){
 		*this = copy;
 }
 AbstractVM&		AbstractVM::operator=(AbstractVM const &vm){
-    exist_error = getExist_error();
-    exist_exit  = getExist_exit();
-    esc = getEsc();
+    exist_error = vm.getExist_error();
+    exist_exit  = vm.getExist_exit();
+    esc = vm.getEsc();
 	return *this;
 }
 
@@ -39,17 +39,17 @@ eOperandType        AbstractVM::getType(std::string const &str_type) {
     return (types[str_type]);
 }
 
-bool 		AbstractVM::getExist_error(void){
+bool 		AbstractVM::getExist_error(void)    const {
     if (!this->exist_exit)
         throw NoExistExitExcept();
     return this->exist_error;
 }
 
-bool 		AbstractVM::getExist_exit(void)     {return this->exist_exit;}
-bool 		AbstractVM::getEsc(void)            {return this->esc;}
+bool 		AbstractVM::getExist_exit(void)     const       {return this->exist_exit;}
+bool 		AbstractVM::getEsc(void)            const       {return this->esc;}
+void        AbstractVM::setExit()                           {this->esc = true;}
 
 void        AbstractVM::setIterLine()           {this->i = 0;}
-void        AbstractVM::setExit()               {this->esc = true;}
 
 void 		AbstractVM::valid_data(std::string const &str){
 	std::regex 		arg("[ \t]*((push)|(assert))[ \t]+?((int8)|(int16)|(int32)|(float)|(double))[ \t]*?\\(([-]?[0-9]*.[0-9]*)\\)[ \t]*([;].*)?");
@@ -105,29 +105,6 @@ void 		AbstractVM::data_management(std::string const &str){
     this->i++;
     if (regex_match(str, arg))
     {
-//        std::cout   << result.operator[](2)
-//                    << std::endl
-//                    << "first"
-//                    << result.str()
-//                    << result.position()
-//                    << std::endl
-//                    << result.str(4)
-//                    << std::endl
-//                    << result.str(0)
-//                    << std::endl
-//                    << result.str(2)
-//                    << std::endl
-//                    << result.str(3)
-//                    << std::endl
-//                    << result.str(5)
-//                    << std::endl
-//                    << result.str(6)
-//                    << std::endl
-//                    << result.str(7)
-//                    << std::endl
-//                    << result.str(8)
-//                    << std::endl;
-
         std::regex_search(str.begin(), str.end(), result, arg);
         (this->*arg_exe[result.str(1)])(result.str(10), getType(result.str(4)));
     }
@@ -199,7 +176,7 @@ void	    AbstractVM::Mul(void){
     v.pop_back();
     const IOperand *b = v.back();
     v.pop_back();
-    const IOperand *c = *a * *b;
+    const IOperand *c = *b * *a;
     Push(c->toString(), c->getType());
     delete a;
     delete b;
@@ -210,10 +187,10 @@ void	    AbstractVM::Mul(void){
 void	    AbstractVM::Div(void){
     if (v.size() < 2)
         throw LessThanTwoArgExcept(std::to_string(this->i));
-    const IOperand *a = v.back();
-    v.pop_back();
     const IOperand *b = v.back();
     v.pop_back();
+    const IOperand *a = v.back();
+	v.pop_back();
     const IOperand *c = *a / *b;
     Push(c->toString(), c->getType());
     delete a;
@@ -265,13 +242,11 @@ void	    AbstractVM::Delim(void){
 void	    AbstractVM::Sum(void){
     if (v.size() < 2)
         throw LessThanTwoArgExcept(std::to_string(this->i));
-    const IOperand *a = factory.createOperand(Int32, std::to_string(0));
-
-    for(int i = 0; i < v.size(); i++)
+    const IOperand *a = factory.createOperand(Double, std::to_string(0));
+    for(unsigned long i = 0; i < v.size(); i++)
         a = *a + *(v[i]);
 	std::cout << "SUMM ";
 	a->getPrint();
-//    delete a;
 }
 
 void	    AbstractVM::Max(void){
@@ -280,13 +255,11 @@ void	    AbstractVM::Max(void){
     else
     {
         const IOperand *a = factory.createOperand(Int32, std::to_string(INT32_MIN));
-
-        for(int i = 0; i < v.size(); i++)
+        for(unsigned long i = 0; i < v.size(); i++)
             if (*(v[i]) > *a)
                 a = (v[i]);
 		std::cout << "MAX ";
 		a->getPrint();
-//        delete a;
     }
 }
 
@@ -296,13 +269,11 @@ void	    AbstractVM::Min(void){
     else
 	{
         const IOperand *a = factory.createOperand(Int32, std::to_string(INT32_MAX));
-
-        for (int i = 0; i < v.size(); i++)
+        for (unsigned long i = 0; i < v.size(); i++)
             if (*(v[i]) < *a)
 				a = (v[i]);
 		std::cout << "MIN ";
         a->getPrint();
-//        delete a;
     }
 }
 
@@ -311,15 +282,11 @@ void	    AbstractVM::Avrg(void){
         throw EmptyStackExcept(std::to_string(this->i));
     else {
         const IOperand *a = factory.createOperand(Int32, std::to_string(0));
-
-        for (int i = 0; i < v.size(); i++)
+        for (unsigned long i = 0; i < v.size(); i++)
             a = *a + *(v[i]);
-
-//		const IOperand *b = ;
         a = *a / *(factory.createOperand(a->getType(), std::to_string(v.size())));
 		std::cout << "AVRG ";
 		a->getPrint();
-//        delete a;
     }
 }
 
@@ -329,18 +296,16 @@ void	    AbstractVM::Asort(void){
     else {
         const IOperand *tmp;
 
-        for (int i = 0; i < v.size(); i++)
-            for (int j = 0; j < v.size(); j++)
+        for (unsigned long i = 0; i < v.size(); i++)
+            for (unsigned long j = 0; j < v.size(); j++)
             {
                 if (i != j && *(v[i]) > *(v[j]))
                 {
                     tmp = v[i];
                     v[i] = v[j];
                     v[j] = tmp;
-
                 }
             }
-//        delete tmp;
     }
 }
 
@@ -350,20 +315,15 @@ void	    AbstractVM::Dsort(void){
     else {
         const IOperand *tmp;
 
-        for (int i = 0; i < v.size(); i++)
-            for (int j = 0; j < v.size(); j++)
+        for (unsigned long i = 0; i < v.size(); i++)
+            for (unsigned long j = 0; j < v.size(); j++)
             {
                 if (i != j && *(v[i]) < *(v[j]))
                 {
                     tmp = v[i];
                     v[i] = v[j];
                     v[j] = tmp;
-
                 }
             }
-//        delete tmp;
     }
 }
-
-//EXEPTION______________________________________________________________________________
-//

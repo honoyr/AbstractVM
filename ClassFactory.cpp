@@ -15,15 +15,6 @@
 #include "ClassOperand.hpp"
 #include <climits>
 
-//
-//Factory::Factory (){}
-//Factory::Factory(Factory const &rhs){ }
-//Factory::~Factory(){}
-//
-//Factory::Factory &operator=(Factory const &rhs){ return *this; }
-
-
-
 IOperand const * Factory::createInt8( std::string const & value ) const {
 	return (new Operand<char>(static_cast<char>(std::stoi(value))));
 }
