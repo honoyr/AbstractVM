@@ -13,30 +13,24 @@
 NAME	= 	avm
 
 FLAGS	= 	-Wall -Wextra -Werror -std=c++11
-SRC		=	Factory.class.c \
-			main.c \
-			AbstractVM.class.c
-OBJ		=	$(addprefix $(OBJ_DIR), $(SRC:.c=.o))
-INC		=	-I $(INC_DIR)
+SRC		=	ClassAbstractVM.cpp \
+			main.cpp \
+			ClassFactory.cpp
+
+OBJ		=	$(SRC:.cpp=.o)
 
 all:		$(NAME)
 
 $(NAME):	$(OBJ)
-			@clang++ $(FLAGS) $(OBJ) -o $(NAME) $(INC)
+			@clang++ $(FLAGS) $(OBJ) -o $(NAME)
 			@echo " \033[1;92mDone!\033[0m"
 
-$(OBJ):		| $(OBJ_DIR)
-
-$(OBJ_DIR):
-			@echo "\033[0;92mCompiling sources\033[0m"
-			@mkdir $(OBJ_DIR)
-
-$(OBJ_DIR)%.o:	$(SRC_DIR)%.cpp
-				@clang++ -c $< -o $@ $(FLAGS) $(INC)
-				@echo "\033[42m  \033[0m\c"
+$(OBJ):
+			@clang++ -c $(FLAGS) $(SRC)
+			@echo "\033[42m  \033[0m\c"
 
 clean:
-			@rm -rf $(OBJ_DIR)
+			@rm -rf $(OBJ)
 
 fclean:		clean
 			@rm -f $(NAME)

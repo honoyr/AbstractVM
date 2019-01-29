@@ -134,7 +134,7 @@ public:
 
     IOperand const * operator%( IOperand const & rhs ) const {
 
-		if (convert_compare(rhs) == 0 || convert_type(this->toString()) == 0)
+		if (convert_compare(rhs) == convert_type("0") || convert_type(this->toString()) == convert_type("0"))
 			throw DivideByZeroExcept();
 
         if (rhs.getPrecision() > this->getPrecision())
