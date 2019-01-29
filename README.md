@@ -24,6 +24,8 @@ Commands
 -'dsort': descending sort of the stack
 -'exit': tells the program that is ended
 
+The objective of this project. Writing a Filler playe
+
 # Usage
 $> make
 $> ./avm test/1test.txt
