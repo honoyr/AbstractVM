@@ -155,34 +155,11 @@ public:
     }
 
     bool            operator<( IOperand const & rhs ) const {
-
-		if (rhs.getType() == Int8)
-			return ((convert_type(this->str)) <
-					(convert_compare(rhs)));
-		if (rhs.getType() == Int16)
-			return ((convert_type(this->str)) <
-					(convert_compare(rhs)));
-        else if (rhs.getType() == Int32)
-			return ((convert_type(this->str) < (convert_compare(rhs))));
-        else if (rhs.getType() == Float)
-			return ((convert_type(this->str) < (convert_compare(rhs))));
-		else
 			return ((convert_type(this->str) < (convert_compare(rhs))));
     }
 
     bool            operator>( IOperand const & rhs ) const {
-
-		if (rhs.getType() == Int8)
-			return ((convert_type(this->str)) > (convert_compare(rhs)));
-		if (rhs.getType() == Int16)
-			return ((convert_type(this->str)) > (convert_compare(rhs)));
-		else if (rhs.getType() == Int32)
 			return ((convert_type(this->str) > (convert_compare(rhs))));
-		else if (rhs.getType() == Float)
-			return ((convert_type(this->str) > (convert_compare(rhs))));
-		else
-			return ((convert_type(this->str) > (convert_compare(rhs))));
-
     }
 
 

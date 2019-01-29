@@ -34,7 +34,6 @@ void    management(AbstractVM &vm, std::string str)
     catch(std::exception &e) {
         std::cout << e.what() << std::endl;
     }
-
 }
 
 void	pars_stdin(std::string str, AbstractVM & vm)
@@ -49,7 +48,7 @@ void	pars_stdin(std::string str, AbstractVM & vm)
         if (str == ";;") {
             break;
         }
-			v_str.push_back(str);
+		v_str.push_back(str);
 	}
 	for(unsigned long i = 0; i < v_str.size(); i++)
 		valid_if_exception(vm, v_str[i]);

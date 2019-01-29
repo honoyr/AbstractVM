@@ -176,7 +176,7 @@ void	    AbstractVM::Mul(void){
     v.pop_back();
     const IOperand *b = v.back();
     v.pop_back();
-    const IOperand *c = *a * *b;
+    const IOperand *c = *b * *a;
     Push(c->toString(), c->getType());
     delete a;
     delete b;
@@ -242,7 +242,7 @@ void	    AbstractVM::Delim(void){
 void	    AbstractVM::Sum(void){
     if (v.size() < 2)
         throw LessThanTwoArgExcept(std::to_string(this->i));
-    const IOperand *a = factory.createOperand(Int32, std::to_string(0));
+    const IOperand *a = factory.createOperand(Double, std::to_string(0));
     for(unsigned long i = 0; i < v.size(); i++)
         a = *a + *(v[i]);
 	std::cout << "SUMM ";
