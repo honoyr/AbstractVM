@@ -1,7 +1,7 @@
 # AbstractVM
 ----------
 
-AbstractVM is a machine that uses a stack to compute arithmetic expressions between values with different types (int8, int16, int32, float, double)
+AbstractVM is a virtual machine that uses a stack to compute arithmetic expressions between values with different types (int8, int16, int32, float, double)
 These arithmetic expressions are provided to the machine as basic assembly commands.
 
 ## Lexical info
